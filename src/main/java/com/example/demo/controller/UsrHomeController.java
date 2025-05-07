@@ -1,55 +1,53 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.dto.Article;
+
 @Controller
 public class UsrHomeController {
 
-	private int count;
-
-	public UsrHomeController() {
-		count = 0;
-	}
-
-	@RequestMapping("/usr/home/main")
+	@RequestMapping("/usr/home/getMap")
 	@ResponseBody
-	public String showMain() {
-		return "안녕";
+	public Map<String, Object> getMap() {
+		Map<String, Object> testMap = new HashMap();
+		testMap.put("id", "1");
+		testMap.put("title", "제목1");
+		testMap.put("body", "내용1");
+
+		return testMap;
 	}
 
-	@RequestMapping("/usr/home/main2")
+	@RequestMapping("/usr/home/getDouble")
 	@ResponseBody
-	public String showMain2() {
-		return "잘가";
+	public Double getDouble() {
+		Double testDouble = 3.141592;
+
+		return testDouble;
 	}
 
-	@RequestMapping("/usr/home/main3")
+	@RequestMapping("/usr/home/getBoolean")
 	@ResponseBody
-	public String showMain3() {
-		return String.valueOf(1 + 2);
+	public Boolean getBoolean() {
+		Boolean testBoolean = true;
+
+		return testBoolean;
 	}
 
-	@RequestMapping("/usr/home/getCount")
+	@RequestMapping("/usr/home/getArticle")
 	@ResponseBody
-	public String getCount() {
+	public Article getArticle() {
+		int id = 1;
+		String title = "제목1";
+		String body = "내용1";
+		Article testBoolean = new Article(id, title, body);
 
-		return String.valueOf(count++);
+		return testBoolean;
 	}
 
-	@RequestMapping("/usr/home/setCount")
-	@ResponseBody
-	public String setCount() {
-		count = 0;
-		return "count 값 0으로 초기화";
-	}
-
-//	getParameter와 같은 역할
-	@RequestMapping("/usr/home/setCountValue")
-	@ResponseBody
-	public String setCountValue(int value) {
-		this.count = value;
-		return "count 값" + count + "으로 설정";
-	}
 }
