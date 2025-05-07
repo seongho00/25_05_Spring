@@ -32,7 +32,7 @@ public class UsrArticleController {
 	@ResponseBody
 	public List<Article> getArticles() {
 
-		return articleservice.articles;
+		return articleservice.getArticles();
 	}
 
 	@RequestMapping("/usr/article/getArticle")
@@ -58,7 +58,7 @@ public class UsrArticleController {
 			return id + "번 게시글은 없습니다.";
 		}
 
-		articleservice.removeArticle(article);
+		articleservice.removeArticle(id);
 
 		return id + "번 게시글이 삭제되었습니다.";
 
@@ -73,7 +73,7 @@ public class UsrArticleController {
 			return id + "번 게시글은 없습니다.";
 		}
 
-		articleservice.modifyArticle(article, title, body);
+		articleservice.modifyArticle(id, title, body);
 
 		return id + "번 게시글이 수정되었습니다. " + article;
 

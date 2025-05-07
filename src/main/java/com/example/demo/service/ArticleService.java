@@ -5,52 +5,49 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.repository.ArticleRepository;
 import com.example.demo.vo.Article;
 
 @Service
 public class ArticleService {
-	int id;
-	public List<Article> articles;
 
-	public ArticleService() {
+	private ArticleRepository articleRepository;
 
-		this.id = 0;
-		this.articles = new ArrayList<>();
+	public ArticleService(ArticleRepository articleRepository) {
+		this.articleRepository = articleRepository;
 		CreateTestData();
-
 	}
 
 	private void CreateTestData() {
 		for (int i = 1; i <= 10; i++) {
-			writeArticle("제목" + i, "내용" + i);
+			articleRepository.writeArticle("제목" + i, "내용" + i);
 		}
 	}
 
 	public Article getArticleById(int id) {
-		for (Article article : articles) {
-			if (article.getId() == id) {
-				return article;
-			}
-		}
-		return null;
-	}
-
-	public void removeArticle(Article article) {
-
-		articles.remove(article);
+		return articleRepository.getArticleById(id);
 
 	}
 
-	public void modifyArticle(Article article, String title, String body) {
+	public void removeArticle(int id) {
+		articleRepository.removeArticle(id);
 
-		article.setTitle(title);
-		article.setBody(body);
+	}
+
+	public void modifyArticle(int id, String title, String body) {
+		articleRepository.modifyArticle(id, title, body);
 
 	}
 
 	public int writeArticle(String title, String body) {
-		articles.add(new Article(++id, title, body));
-		return id;
+
+		return articleRepository.writeArticle(title, body);
+
+	}
+
+	public List<Article> getArticles() {
+
+		return articleRepository.getArticles();
 	}
 
 }
