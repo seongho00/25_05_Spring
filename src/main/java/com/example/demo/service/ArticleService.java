@@ -15,22 +15,10 @@ public class ArticleService {
 
 	public ArticleService(ArticleRepository articleRepository) {
 		this.articleRepository = articleRepository;
-		CreateTestData();
-	}
-
-	private void CreateTestData() {
-		for (int i = 1; i <= 10; i++) {
-			articleRepository.writeArticle("제목" + i, "내용" + i);
-		}
 	}
 
 	public Article getArticleById(int id) {
 		return articleRepository.getArticleById(id);
-
-	}
-
-	public void removeArticle(int id) {
-		articleRepository.removeArticle(id);
 
 	}
 
@@ -48,6 +36,11 @@ public class ArticleService {
 	public List<Article> getArticles() {
 
 		return articleRepository.getArticles();
+	}
+
+	public void deleteArticle(int id) {
+		articleRepository.deleteArticle(id);
+
 	}
 
 }

@@ -58,7 +58,7 @@ public class UsrArticleController {
 			return id + "번 게시글은 없습니다.";
 		}
 
-		articleservice.removeArticle(id);
+		articleservice.deleteArticle(id);
 
 		return id + "번 게시글이 삭제되었습니다.";
 
