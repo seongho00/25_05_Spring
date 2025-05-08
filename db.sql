@@ -14,9 +14,13 @@ CREATE TABLE article (
 CREATE TABLE `member` (
                          id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
                          regDate DATETIME NOT NULL,
+                         updateDate DATETIME NOT NULL,
                          loginId CHAR(100) NOT NULL,
                          loginPw CHAR(100) NOT NULL,
-                         `name` CHAR(100) NOT NULL
+                         `authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨 (3: 일반, 7: 관리자)',
+                         `name` CHAR(100) NOT NULL,
+                         delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0: 탈퇴 전 , 1: 탈퇴 후)',
+                         delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
 
@@ -44,26 +48,31 @@ title = '제목3',
 # 멤버 테스트 데이터 생성
 INSERT INTO `member`
 SET regDate = NOW(),
+updateDate = NOW(),
 loginId = "test1",
 loginPw = "test1",
 `name` = "이름1";
 
 INSERT INTO `member`
 SET regDate = NOW(),
+updateDate = NOW(),
 loginId = "test2",
 loginPw = "test2",
 `name` = "이름2";
 
 INSERT INTO `member`
 SET regDate = NOW(),
+updateDate = NOW(),
 loginId = "test2",
 loginPw = "test2",
 `name` = "이름2";
 
 INSERT INTO `member`
 SET regDate = NOW(),
+updateDate = NOW(),
 loginId = "123",
 loginPw = "123",
+`authLevel` = 7,
 `name` = "123";
 
 
@@ -73,6 +82,8 @@ ORDER BY id DESC;
 
 SELECT *
 FROM `member`
+
+SELECT * FROM `member`   WHERE loginId = 123
 
 
 
