@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +15,14 @@ public class UsrArticleController {
 
 	// new ArticleService를 대체
 	@Autowired
-	ArticleService articleservice;
+	ArticleService articleService;
 
 	// 액션 메서드 (컨트롤러 메서드)
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public String doAdd(String title, String body) {
 
-		int id = articleservice.writeArticle(body, title);
+		int id = articleService.writeArticle(body, title);
 
 		return id + "번 게시글 생성됨";
 	}
@@ -32,14 +31,14 @@ public class UsrArticleController {
 	@ResponseBody
 	public List<Article> getArticles() {
 
-		return articleservice.getArticles();
+		return articleService.getArticles();
 	}
 
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
 	public Object getArticle(int id) {
 
-		Article article = articleservice.getArticleById(id);
+		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
 			return id + "번 게시글은 없습니다.";
@@ -52,13 +51,13 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(int id) {
-		Article article = articleservice.getArticleById(id);
+		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
 			return id + "번 게시글은 없습니다.";
 		}
 
-		articleservice.deleteArticle(id);
+		articleService.deleteArticle(id);
 
 		return id + "번 게시글이 삭제되었습니다.";
 
@@ -67,13 +66,13 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(int id, String title, String body) {
-		Article article = articleservice.getArticleById(id);
+		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
 			return id + "번 게시글은 없습니다.";
 		}
 
-		articleservice.modifyArticle(id, title, body);
+		articleService.modifyArticle(id, title, body);
 
 		return id + "번 게시글이 수정되었습니다. " + article;
 

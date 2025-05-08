@@ -6,9 +6,17 @@ USE 25_05_Spring;
 CREATE TABLE article (
                          id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
                          regDate DATETIME NOT NULL,
+                         updateDate DATETIME NOT NULL,
                          title CHAR(100) NOT NULL,
-                         `body` TEXT NOT NULL,
-                         memberId INT(10) UNSIGNED NOT NULL
+                         `body` TEXT NOT NULL
+);
+
+CREATE TABLE `member` (
+                         id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                         regDate DATETIME NOT NULL,
+                         loginId CHAR(100) NOT NULL,
+                         loginPw CHAR(100) NOT NULL,
+                         `name` CHAR(100) NOT NULL
 );
 
 
@@ -16,27 +24,55 @@ CREATE TABLE article (
 # 게시글 테스트 데이터 생성
 INSERT INTO article
 SET regDate = NOW(),
+updateDate = NOW(),
 title = '제목1',
-`body` = '내용1',
-memberId = 1;
+`body` = '내용1';
+
 
 INSERT INTO article
 SET regDate = NOW(),
+updateDate = NOW(),
 title = '제목2',
-`body` = '내용2',
-memberId = 2;
+`body` = '내용2';
 
 INSERT INTO article
 SET regDate = NOW(),
+updateDate = NOW(),
 title = '제목3',
-`body` = '내용3',
-memberId = 3;
+`body` = '내용3';
 
+# 멤버 테스트 데이터 생성
+INSERT INTO `member`
+SET regDate = NOW(),
+loginId = "test1",
+loginPw = "test1",
+`name` = "이름1";
+
+INSERT INTO `member`
+SET regDate = NOW(),
+loginId = "test2",
+loginPw = "test2",
+`name` = "이름2";
+
+INSERT INTO `member`
+SET regDate = NOW(),
+loginId = "test2",
+loginPw = "test2",
+`name` = "이름2";
+
+INSERT INTO `member`
+SET regDate = NOW(),
+loginId = "123",
+loginPw = "123",
+`name` = "123";
 
 
 SELECT *
 FROM article
 ORDER BY id DESC;
+
+SELECT *
+FROM `member`
 
 
 
