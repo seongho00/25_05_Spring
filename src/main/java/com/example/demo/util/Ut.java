@@ -32,4 +32,9 @@ public class Ut {
 
 	}
 
+	public static String f(String string, Object...args) {
+
+		return String.format(string, args);
+	}
+
 }

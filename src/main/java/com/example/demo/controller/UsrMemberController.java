@@ -38,7 +38,7 @@ public class UsrMemberController {
 		boolean isAvailableLoginId = memberService.isAvailableLogindId(loginId);
 
 		if (isAvailableLoginId == false) {
-			return "이미 가입된 ID 입니다.";
+			return Ut.f("이미 가입된 ID(%s) 입니다.", loginId);
 		}
 
 		Member member = memberService.getMemberByNameEmail(name, email);
