@@ -28,7 +28,9 @@ public class ArticleService {
 
 	public int writeArticle(String title, String body) {
 
-		return articleRepository.writeArticle(title, body);
+		articleRepository.writeArticle(title, body);
+
+		return articleRepository.getLastInsertId();
 
 	}
 

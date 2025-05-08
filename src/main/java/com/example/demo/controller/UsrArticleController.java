@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
+import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
+import com.example.demo.vo.ResultData;
 
 @Controller
 public class UsrArticleController {
@@ -18,63 +20,63 @@ public class UsrArticleController {
 	ArticleService articleService;
 
 	// 액션 메서드 (컨트롤러 메서드)
-	@RequestMapping("/usr/article/doAdd")
+	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doAdd(String title, String body) {
+	public ResultData doAdd(String title, String body) {
 
 		int id = articleService.writeArticle(body, title);
-
-		return id + "번 게시글 생성됨";
+		Article article = articleService.getArticleById(id);
+		return ResultData.from("S-4", Ut.f("%d번 게시글입니다", id), article);
 	}
 
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public List<Article> getArticles() {
+	public ResultData getArticles() {
 
-		return articleService.getArticles();
+		return ResultData.from("S-5", Ut.f("게시글입니다"), articleService.getArticles());
 	}
 
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public Object getArticle(int id) {
+	public ResultData getArticle(int id) {
 
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
-			return id + "번 게시글은 없습니다.";
+			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id));
 		}
 
-		return article;
+		return ResultData.from("S-1", Ut.f("%d번 게시글입니다", id), article);
 
 	}
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(int id) {
+	public ResultData doDelete(int id) {
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
-			return id + "번 게시글은 없습니다.";
+			return ResultData.from("F-2", Ut.f("%d번 게시글은 없습니다", id));
 		}
 
 		articleService.deleteArticle(id);
 
-		return id + "번 게시글이 삭제되었습니다.";
+		return ResultData.from("S-2", Ut.f("%d번 게시글이 삭제되었습니다.", id), article);
 
 	}
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public ResultData doModify(int id, String title, String body) {
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
-			return id + "번 게시글은 없습니다.";
+			return ResultData.from("F-3", Ut.f("%d번 게시글은 없습니다", id));
 		}
 
 		articleService.modifyArticle(id, title, body);
 
-		return id + "번 게시글이 수정되었습니다. " + article;
+		return ResultData.from("S-3", Ut.f("%d번 게시글이 수정되었습니다.", id), article);
 
 	}
 

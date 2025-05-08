@@ -18,6 +18,10 @@
 		DELETE FROM article
 		WHERE id = #{id}
 	</delete>
+	
+	<select id="getLastInsertId" parameterType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
 
 	<update id="modifyArticle" parameterType="map">
 		UPDATE article
