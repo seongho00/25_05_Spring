@@ -13,8 +13,8 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	public void doJoin(String loginId, String loginPw, String name) {
-		memberRepository.doJoin(loginId, loginPw, name);
+	public void doJoin(String loginId, String loginPw, String name, String email) {
+		memberRepository.doJoin(loginId, loginPw, name, email);
 
 	}
 
@@ -30,5 +30,11 @@ public class MemberService {
 			return true;
 		}
 		return false;
+	}
+
+	public Member getMemberByNameEmail(String name, String email) {
+
+		return memberRepository.getMemberByNameEmail(name, email);
+
 	}
 }
