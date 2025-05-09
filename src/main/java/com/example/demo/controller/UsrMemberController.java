@@ -21,7 +21,12 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData doJoin(String loginId, String loginPw, String checkPw, String name, String email) {
+	public ResultData doJoin(HttpSession session, String loginId, String loginPw, String checkPw, String name,
+			String email) {
+
+		if (session.getAttribute("loginedMember") != null) {
+			return ResultData.from("F-A", Ut.f("이미 로그인 중"));
+		}
 		if (Ut.isEmptyOrNull(loginId)) {
 			return ResultData.from("F-1", Ut.f("아이디를 입력해주세요"), loginId);
 
@@ -64,31 +69,30 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public ResultData doLogin(HttpServletRequest request, String loginId, String loginPw) {
-		HttpSession session = request.getSession();
+	public ResultData doLogin(HttpSession session, String loginId, String loginPw) {
 
 		if (session.getAttribute("loginedMember") != null) {
-			return ResultData.from("F-1", Ut.f("이미 로그인 중"));
+			return ResultData.from("F-A", Ut.f("이미 로그인 중"));
 		}
 
 		if (Ut.isEmptyOrNull(loginId)) {
-			return ResultData.from("F-2", Ut.f("아이디를 입력해주세요"), loginId);
+			return ResultData.from("F-1", Ut.f("아이디를 입력해주세요"), loginId);
 
 		}
 		if (Ut.isEmptyOrNull(loginPw)) {
-			return ResultData.from("F-3", Ut.f("비밀번호를 입력해주세요"), loginPw);
+			return ResultData.from("F-2", Ut.f("비밀번호를 입력해주세요"), loginPw);
 
 		}
 
 		boolean isExistLogindId = memberService.isExistLogindId(loginId);
 		if (isExistLogindId == false) {
-			return ResultData.from("F-4", Ut.f("%s는 가입되어 있지 않은 ID 입니다.", loginId));
+			return ResultData.from("F-3", Ut.f("%s는 가입되어 있지 않은 ID 입니다.", loginId));
 		}
 
 		Member loginedMember = memberService.getMemberByLoginId(loginId);
 
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
-			return ResultData.from("F-5", Ut.f("비밀번호가 일치하지 않습니다."), loginPw);
+			return ResultData.from("F-4", Ut.f("비밀번호가 일치하지 않습니다."), loginPw);
 		}
 
 		session.setAttribute("loginedMember", loginedMember);
@@ -104,7 +108,7 @@ public class UsrMemberController {
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("loginedMember") == null) {
-			return ResultData.from("F-1", Ut.f("이미 로그아웃 중"));
+			return ResultData.from("F-A", Ut.f("이미 로그아웃 중"));
 		}
 
 		session.removeAttribute("loginedMember");
