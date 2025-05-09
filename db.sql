@@ -8,7 +8,8 @@ CREATE TABLE article (
                          regDate DATETIME NOT NULL,
                          updateDate DATETIME NOT NULL,
                          title CHAR(100) NOT NULL,
-                         `body` TEXT NOT NULL
+                         `body` TEXT NOT NULL,
+                         memberId INT(10) UNSIGNED NOT NULL
 );
 
 CREATE TABLE `member` (
@@ -17,6 +18,7 @@ CREATE TABLE `member` (
                          updateDate DATETIME NOT NULL,
                          loginId CHAR(100) NOT NULL,
                          loginPw CHAR(100) NOT NULL,
+                         email CHAR(100) NOT NULL,
                          `authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨 (3: 일반, 7: 관리자)',
                          `name` CHAR(100) NOT NULL,
                          delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0: 탈퇴 전 , 1: 탈퇴 후)',
@@ -30,20 +32,23 @@ INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목1',
-`body` = '내용1';
+`body` = '내용1',
+memberId = '1';
 
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목2',
-`body` = '내용2';
+`body` = '내용2',
+memberId = '1';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목3',
-`body` = '내용3';
+`body` = '내용2',
+memberId = '2';
 
 # 멤버 테스트 데이터 생성
 INSERT INTO `member`
@@ -51,21 +56,24 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = "test1",
 loginPw = "test1",
-`name` = "이름1";
+`name` = "이름1",
+email = "test1@gmail.com";
 
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
 loginId = "test2",
 loginPw = "test2",
-`name` = "이름2";
+`name` = "이름2",
+email = "test2@gmail.com";
 
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = "test2",
-loginPw = "test2",
-`name` = "이름2";
+loginId = "test3",
+loginPw = "test3",
+`name` = "이름3",
+email = "test3@gmail.com";
 
 INSERT INTO `member`
 SET regDate = NOW(),
@@ -73,7 +81,8 @@ updateDate = NOW(),
 loginId = "123",
 loginPw = "123",
 `authLevel` = 7,
-`name` = "123";
+`name` = "123",
+email = "123@gmail.com";
 
 
 SELECT *
@@ -85,6 +94,9 @@ FROM `member`
 
 SELECT * FROM `member`   WHERE loginId = 123
 
+SELECT * 
+FROM `member`
+WHERE `name` = '이름2' AND email = '이름2'
 
 
 ######################################################################
