@@ -2,9 +2,9 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -13,7 +13,6 @@ import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.ResultData;
 
-import jakarta.security.auth.message.callback.PrivateKeyCallback.Request;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -47,19 +46,22 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String list(HttpServletRequest request) {
+	public String showList(Model model) {
+
 		List<Article> articles = articleService.getArticles();
-		request.setAttribute("articles", articles);
+
+		model.addAttribute("articles", articles);
+
 		return "/usr/article/list";
 //		return ResultData.from("S-1", Ut.f("게시글입니다"), articleService.getArticles());
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String detail(HttpServletRequest request, int id) {
+	public String detail(Model model, int id) {
 
 		Article article = articleService.getArticleById(id);
+		model.addAttribute("article", article);
 
-		request.setAttribute("article", article);
 		return "/usr/article/detail";
 //		if (article == null) {
 //			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id));

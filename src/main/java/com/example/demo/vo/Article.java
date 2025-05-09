@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Article {
 	int id;
-	LocalDateTime regDate;
-	LocalDateTime updateDate;
+	String regDate;
+	String updateDate;
 	String title;
 	String body;
 	String name;
