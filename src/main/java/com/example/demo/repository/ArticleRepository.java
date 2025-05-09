@@ -10,7 +10,7 @@ import com.example.demo.vo.Article;
 public interface ArticleRepository {
 
 //	@Insert("INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = #{title}, `body` = #{body}")
-	public int writeArticle(String title, String body);
+	public int writeArticle(String title, String body, int memberId);
 
 //	@Select("SELECT * FROM article WHERE id = #{id}")
 	public Article getArticleById(int id);

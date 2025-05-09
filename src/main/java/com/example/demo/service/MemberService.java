@@ -24,12 +24,12 @@ public class MemberService {
 
 	}
 
-	public boolean isAvailableLogindId(String loginId) {
+	public boolean isExistLogindId(String loginId) {
 		Member member = memberRepository.getMemberByLoginId(loginId);
 		if (member == null) {
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	public Member getMemberByNameEmail(String name, String email) {

@@ -15,4 +15,6 @@ public class Article {
 	LocalDateTime updateDate;
 	String title;
 	String body;
+	String name;
+	int memberId;
 }
