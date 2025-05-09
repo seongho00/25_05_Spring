@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+a {
+	color: inherit;
+}
+
+li {
+	list-style: none;
+}

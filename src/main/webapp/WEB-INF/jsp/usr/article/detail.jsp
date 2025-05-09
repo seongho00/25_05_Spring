@@ -11,6 +11,8 @@ Article article = (Article) request.getAttribute("article");
 <head>
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
 	<h1>게시글 상세보기</h1>
