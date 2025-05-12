@@ -40,8 +40,10 @@
 			</tbody>
 		</table>
 		<div class="btns">
-			<c:if test="${article.memberId eq loginedMemberId}">   
+			<c:if test="${article.userCanModify}">   
 				<button type="button" onclick="location.replace('modifyPage?id=${article.id}');">수정하기</button>
+			</c:if>
+			<c:if test="${article.userCanDelete}">  
 				<button type="button" onclick="location.replace('doDelete?id=${article.id}');">삭제하기</button>
 			</c:if>
 			<button type="button" onclick="history.back();">뒤로가기</button>

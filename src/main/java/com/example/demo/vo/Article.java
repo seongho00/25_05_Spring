@@ -14,6 +14,8 @@ public class Article {
 	String title;
 	String body;
 	int memberId;
-
+	boolean userCanModify;
+	boolean userCanDelete;
 	String extra__writer;
+
 }

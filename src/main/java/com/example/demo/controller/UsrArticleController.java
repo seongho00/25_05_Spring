@@ -60,21 +60,18 @@ public class UsrArticleController {
 	public String showDetail(Model model, HttpSession session, int id) {
 
 		int loginedMemberId = -1;
-		Article article = articleService.getArticleById(id);
 		if (session.getAttribute("loginedMemberId") != null) {
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		}
 
+		Article article = articleService.getForPrintArticleById(loginedMemberId, id);
+		if (loginedMemberId == article.getMemberId()) {
+			article.setUserCanModify(true);
+		}
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", loginedMemberId);
 
 		return "/usr/article/detail";
-//		if (article == null) {
-//			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id));
-//		}
-
-//		return ResultData.from("S-1", Ut.f("%d번 게시글입니다", id), article);
-
 	}
 
 	@RequestMapping("/usr/article/doDelete")
@@ -84,18 +81,19 @@ public class UsrArticleController {
 		if (session.getAttribute("loginedMember") == null) {
 			return ResultData.from("F-2", "로그인 후 이용해주세요");
 		}
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id));
 		}
 
-		if (article.getMemberId() != (int) session.getAttribute("loginedMemberId")) {
-			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
+		ResultData userCanDeleteRd = articleService.userCanDelete(loginedMemberId, article);
+		if (userCanDeleteRd.isSuccess()) {
+			articleService.deleteArticle(id);
 		}
-		articleService.deleteArticle(id);
 
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 삭제되었습니다.", id), article);
+		return ResultData.from(userCanDeleteRd.getResultCode(), userCanDeleteRd.getMsg());
 
 	}
 
@@ -117,7 +115,7 @@ public class UsrArticleController {
 //
 //		articleService.modifyArticle(id, title, body);
 //		Article modifyArticle = articleService.getArticleById(id);
-		
+
 		model.addAttribute("id", id);
 
 		return "/usr/article/modify";
@@ -131,20 +129,22 @@ public class UsrArticleController {
 		if (session.getAttribute("loginedMember") == null) {
 			return ResultData.from("F-2", "로그인 후 이용해주세요");
 		}
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id));
 		}
 
-		if (article.getMemberId() != (int) session.getAttribute("loginedMemberId")) {
-			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
+		ResultData userCanModifyRd = articleService.userCanModify(loginedMemberId, article);
+		if (userCanModifyRd.isSuccess()) {
+			articleService.modifyArticle(id, title, body);
 		}
 
-		articleService.modifyArticle(id, title, body);
 		Article modifyArticle = articleService.getArticleById(id);
 
-		return ResultData.from("S-1", Ut.f("%d번 게시글이 수정되었습니다.", id), modifyArticle);
+		return ResultData.from(userCanModifyRd.getResultCode(), userCanModifyRd.getMsg(), modifyArticle);
 
 	}
 
