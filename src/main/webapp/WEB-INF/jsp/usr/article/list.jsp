@@ -27,7 +27,7 @@
 							<a class="hover:underline" href="detail?id=${article.id }">${article.title }</a>
 						</td>
 						<td style="text-align: center;">${article.memberId }</td>
-						<td style="text-align: center;">${article.name }</td>
+						<td style="text-align: center;">${article.extra__writer }</td>
 					</tr>
 				</c:forEach>
 			</tbody>

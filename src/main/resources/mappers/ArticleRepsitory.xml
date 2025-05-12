@@ -37,7 +37,7 @@
 
 	<select id="getArticleById" parameterType="int"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.name
+		SELECT A.*, M.name AS extra__writer 
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
@@ -46,7 +46,7 @@
 
 	<select id="getArticles"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.name
+		SELECT A.*, M.name AS extra__writer 
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id

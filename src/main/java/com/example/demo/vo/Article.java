@@ -15,6 +15,7 @@ public class Article {
 	String updateDate;
 	String title;
 	String body;
-	String name;
 	int memberId;
+	
+	String extra__writer;
 }

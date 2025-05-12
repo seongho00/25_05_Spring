@@ -35,20 +35,19 @@
 				</tr>
 				<tr>
 					<th style="text-align: center;">Writer</th>
-					<td style="text-align: center;">${article.extra__writer }</td>
+					<td style="text-align: center;">${article.extra__name }</td>
 				</tr>
 			</tbody>
 		</table>
 		<div class="btns">
-			<c:if test="${article.memberId eq loginedMemberId}">   
-				<button type="button" onclick="location.replace('doModify?id=${article.id}');">수정하기</button>
-				<button type="button" onclick="location.replace('doDelete?id=${article.id}');">삭제하기</button>
-			</c:if>
+			<button type="button" onclick="location.replace('doModify')">수정하기</button>
+		</div>
+		<div class="btns">
+			<button type="button" onclick="history.back();">삭제하기</button>
+		</div>
+		<div class="btns">
 			<button type="button" onclick="history.back();">뒤로가기</button>
 		</div>
-
-
-
 
 	</div>
 </section>

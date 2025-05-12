@@ -112,6 +112,7 @@ public class UsrMemberController {
 		}
 
 		session.removeAttribute("loginedMember");
+		session.removeAttribute("loginedMemberId");
 
 		return ResultData.from("S-1", Ut.f("로그아웃 되었습니다."));
 

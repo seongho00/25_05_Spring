@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.service.ArticleService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
+import com.example.demo.vo.Member;
 import com.example.demo.vo.ResultData;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -57,10 +57,16 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(Model model, int id) {
+	public String showDetail(Model model, HttpSession session, int id) {
 
+		int loginedMemberId = -1;
 		Article article = articleService.getArticleById(id);
+		if (session.getAttribute("loginedMemberId") != null) {
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
+
 		model.addAttribute("article", article);
+		model.addAttribute("loginedMemberId", loginedMemberId);
 
 		return "/usr/article/detail";
 //		if (article == null) {
