@@ -61,8 +61,9 @@ public class ArticleService {
 		}
 
 		ResultData userCanModifyRd = userCanModify(loginedMemberId, article);
+		ResultData userCanDeleteRd = userCanModify(loginedMemberId, article);
 		article.setUserCanModify(userCanModifyRd.isSuccess());
-		article.setUserCanDelete(userCanModifyRd.isSuccess());
+		article.setUserCanDelete(userCanDeleteRd.isSuccess());
 	}
 
 	public ResultData userCanModify(int loginedMemberId, Article article) {
@@ -73,7 +74,7 @@ public class ArticleService {
 
 		return ResultData.from("S-1", Ut.f("%d번 게시글을 수정함", article.getId()));
 	}
-	
+
 	public ResultData userCanDelete(int loginedMemberId, Article article) {
 
 		if (article.getMemberId() != loginedMemberId) {
