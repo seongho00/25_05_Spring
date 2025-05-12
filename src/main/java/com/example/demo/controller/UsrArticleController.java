@@ -99,6 +99,31 @@ public class UsrArticleController {
 
 	}
 
+	@RequestMapping("/usr/article/modifyPage")
+	public String showModifyPage(Model model, HttpSession session, int id) {
+
+//		if (session.getAttribute("loginedMember") == null) {
+//			return ResultData.from("F-2", "로그인 후 이용해주세요");
+//		}
+		Article article = articleService.getArticleById(id);
+//
+//		if (article == null) {
+//			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id));
+//		}
+//
+//		if (article.getMemberId() != (int) session.getAttribute("loginedMemberId")) {
+//			return ResultData.from("F-3", Ut.f("권한이 없습니다."));
+//		}
+//
+//		articleService.modifyArticle(id, title, body);
+//		Article modifyArticle = articleService.getArticleById(id);
+		
+		model.addAttribute("id", id);
+
+		return "/usr/article/modify";
+
+	}
+
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public ResultData<Article> doModify(HttpSession session, int id, String title, String body) {

@@ -41,7 +41,7 @@
 		</table>
 		<div class="btns">
 			<c:if test="${article.memberId eq loginedMemberId}">   
-				<button type="button" onclick="location.replace('doModify?id=${article.id}');">수정하기</button>
+				<button type="button" onclick="location.replace('modifyPage?id=${article.id}');">수정하기</button>
 				<button type="button" onclick="location.replace('doDelete?id=${article.id}');">삭제하기</button>
 			</c:if>
 			<button type="button" onclick="history.back();">뒤로가기</button>
