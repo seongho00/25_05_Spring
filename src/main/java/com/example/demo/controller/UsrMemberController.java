@@ -19,14 +19,23 @@ public class UsrMemberController {
 	@Autowired
 	MemberService memberService;
 
-	@RequestMapping("/usr/member/doJoin")
-	@ResponseBody
-	public ResultData doJoin(HttpSession session, String loginId, String loginPw, String checkPw, String name,
-			String email) {
+	private ResultData nullCheck(String loginId, String loginPw, String name, String email) {
 
-		if (session.getAttribute("loginedMember") != null) {
-			return ResultData.from("F-A", Ut.f("이미 로그인 중"));
+		nullCheck(loginId, loginPw);
+
+		if (Ut.isEmptyOrNull(name)) {
+			return ResultData.from("F-3", Ut.f("이름을 입력해주세요"), name);
+
 		}
+		if (Ut.isEmptyOrNull(email)) {
+			return ResultData.from("F-4", Ut.f("이메일을 입력해주세요"), email);
+
+		}
+		return null;
+
+	}
+
+	private ResultData nullCheck(String loginId, String loginPw) {
 		if (Ut.isEmptyOrNull(loginId)) {
 			return ResultData.from("F-1", Ut.f("아이디를 입력해주세요"), loginId);
 
@@ -35,13 +44,21 @@ public class UsrMemberController {
 			return ResultData.from("F-2", Ut.f("비밀번호를 입력해주세요"), loginPw);
 
 		}
-		if (Ut.isEmptyOrNull(name)) {
-			return ResultData.from("F-3", Ut.f("이름을 입력해주세요"), name);
+		return null;
 
+	}
+
+	@RequestMapping("/usr/member/doJoin")
+	@ResponseBody
+	public ResultData doJoin(HttpSession session, String loginId, String loginPw, String checkPw, String name,
+			String email) {
+
+		if (session.getAttribute("loginedMember") != null) {
+			return ResultData.from("F-A", Ut.f("이미 로그인 중"));
 		}
-		if (Ut.isEmptyOrNull(email)) {
-			return ResultData.from("F-4", Ut.f("이메일을 입력해주세요"), email);
 
+		if (nullCheck(loginId, loginPw, name, email) != null) {
+			return nullCheck(loginId, loginPw, name, email);
 		}
 
 		if (loginPw.equals(checkPw) == false) {
@@ -75,13 +92,8 @@ public class UsrMemberController {
 			return ResultData.from("F-A", Ut.f("이미 로그인 중"));
 		}
 
-		if (Ut.isEmptyOrNull(loginId)) {
-			return ResultData.from("F-1", Ut.f("아이디를 입력해주세요"), loginId);
-
-		}
-		if (Ut.isEmptyOrNull(loginPw)) {
-			return ResultData.from("F-2", Ut.f("비밀번호를 입력해주세요"), loginPw);
-
+		if (nullCheck(loginId, loginPw) != null) {
+			return nullCheck(loginId, loginPw);
 		}
 
 		boolean isExistLogindId = memberService.isExistLogindId(loginId);

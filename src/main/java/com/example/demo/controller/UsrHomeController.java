@@ -12,10 +12,10 @@ public class UsrHomeController {
 	public String showMain() {
 		return "/usr/home/main";
 	}
-	
+
 	@RequestMapping("/")
 	public String showMain2() {
-		return "/usr/home/main";
+		return "redirect:/usr/home/main";
 	}
 
 }

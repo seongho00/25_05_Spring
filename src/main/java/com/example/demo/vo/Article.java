@@ -1,7 +1,5 @@
 package com.example.demo.vo;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +14,6 @@ public class Article {
 	String title;
 	String body;
 	int memberId;
-	
+
 	String extra__writer;
 }
