@@ -29,7 +29,7 @@ public class UsrArticleController {
 	// 액션 메서드 (컨트롤러 메서드)
 	@RequestMapping("/usr/article/writePage")
 	public String writePage(HttpServletRequest req, String title, String body) {
-		return "/usr/article/writePage";
+		return "/usr/article/write";
 
 	}
 
@@ -49,7 +49,7 @@ public class UsrArticleController {
 		int memberId = rq.getLoginedMemberId();
 		int id = articleService.writeArticle(body, title, memberId);
 		Article article = articleService.getArticleById(id);
-		return Ut.jsReplace("S-1", Ut.f("%d번 게시글입니다", id), "../article/list");
+		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 작성되었습니다.", id), "../article/list");
 	}
 
 	@RequestMapping("/usr/article/list")

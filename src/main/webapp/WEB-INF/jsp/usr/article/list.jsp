@@ -32,6 +32,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<button type="button" onclick="location.replace('../article/writePage')">글쓰기</button>
 	</div>
 </section>
 
