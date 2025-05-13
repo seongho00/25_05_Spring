@@ -81,7 +81,7 @@ public class UsrArticleController {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 		if (rq.isLogined() == false) {
-			return Ut.jsReplace("F-1", "로그인 후 이용해주세요", "../member/doLogin");
+			return Ut.jsReplace("F-1", "로그인 후 이용해주세요", "../member/loginPage");
 		}
 		Article article = articleService.getArticleById(id);
 
