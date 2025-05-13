@@ -109,9 +109,14 @@ public class UsrArticleController {
 	public String showModifyPage(Model model, int id) {
 
 		Article article = articleService.getArticleById(id);
-		// 게시글 존재
+
 		// 권한체크
 
+		if (article == null) {
+			return Ut.jsHistoryBack("F-1", Ut.f("%d번 게시글은 없습니다", id));
+		}
+
+		model.addAttribute("article", article);
 		model.addAttribute("id", id);
 
 		return "/usr/article/modify";
@@ -125,9 +130,12 @@ public class UsrArticleController {
 		int loginedMemberId = rq.getLoginedMemberId();
 
 		Article article = articleService.getArticleById(id);
-
-		if (article == null) {
-			return Ut.jsHistoryBack("F-1", Ut.f("%d번 게시글은 없습니다", id));
+		
+		if (title == null || title.trim().length() == 0) {
+			return Ut.jsHistoryBack("F-1", "제목 입력해");
+		}
+		if (body == null || body.trim().length() == 0) {
+			return Ut.jsHistoryBack("F-1", "내용 입력해");
 		}
 
 		ResultData userCanModifyRd = articleService.userCanModify(loginedMemberId, article);
@@ -137,7 +145,7 @@ public class UsrArticleController {
 
 		Article modifyArticle = articleService.getArticleById(id);
 
-		return Ut.jsReplace(userCanModifyRd.getResultCode(), userCanModifyRd.getMsg(), "../article/list");
+		return Ut.jsReplace(userCanModifyRd.getResultCode(), userCanModifyRd.getMsg(), "../article/detail?id=" + id);
 
 	}
 

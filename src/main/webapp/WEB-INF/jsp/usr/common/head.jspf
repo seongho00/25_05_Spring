@@ -35,7 +35,7 @@
 						<a class="hover:underline" href="../member/loginPage">LOGIN</a>
 					</li>
 					<li>
-						<a class="hover:underline" href="../member/joinPage">REGISTER</a>
+						<a class="hover:underline" href="../member/joinPage">JOIN</a>
 					</li>
 				</c:if>
 				<c:if test="${rq.isLogined() }">

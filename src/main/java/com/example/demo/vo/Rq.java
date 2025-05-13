@@ -45,7 +45,7 @@ public class Rq {
 		resp.setContentType("text/html; charset=UTF-8");
 		println("<script>");
 		if (!Ut.isEmpty(msg)) {
-			println("alert('" + msg + "');");
+			println("alert('" + msg.replace("'", "\\'") + "');");
 		}
 		println("history.back();");
 		println("</script>");
