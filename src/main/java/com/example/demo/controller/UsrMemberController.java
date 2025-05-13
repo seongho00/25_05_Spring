@@ -20,16 +20,16 @@ public class UsrMemberController {
 	@Autowired
 	MemberService memberService;
 
-	private ResultData nullCheck(String loginId, String loginPw, String name, String email) {
+	private String nullCheck(String loginId, String loginPw, String name, String email) {
 
 		nullCheck(loginId, loginPw);
 
 		if (Ut.isEmptyOrNull(name)) {
-			return ResultData.from("F-3", Ut.f("이름을 입력해주세요"), name);
+			return Ut.jsHistoryBack("F-3", Ut.f("이름을 입력해주세요"));
 
 		}
 		if (Ut.isEmptyOrNull(email)) {
-			return ResultData.from("F-4", Ut.f("이메일을 입력해주세요"), email);
+			return Ut.jsHistoryBack("F-4", Ut.f("이메일을 입력해주세요"));
 
 		}
 		return null;
@@ -49,45 +49,46 @@ public class UsrMemberController {
 
 	}
 
+	@RequestMapping("/usr/member/joinPage")
+	public String joinPage() {
+		return "usr/member/join";
+	}
+
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData doJoin(HttpSession session, String loginId, String loginPw, String checkPw, String name,
+	public String doJoin(HttpSession session, String loginId, String loginPw, String checkPw, String name,
 			String email) {
-
-		if (session.getAttribute("loginedMember") != null) {
-			return ResultData.from("F-A", Ut.f("이미 로그인 중"));
-		}
 
 		if (nullCheck(loginId, loginPw, name, email) != null) {
 			return nullCheck(loginId, loginPw, name, email);
 		}
 
 		if (loginPw.equals(checkPw) == false) {
-			return ResultData.from("F-5", Ut.f("두 비밀번호[(%s),(%s)]가 일치하지 않습니다.", loginPw, checkPw));
+			return Ut.jsHistoryBack("F-5", Ut.f("두 비밀번호[(%s),(%s)]가 일치하지 않습니다.", loginPw, checkPw));
 
 		}
 
 		boolean isExistLogindId = memberService.isExistLogindId(loginId);
 
 		if (isExistLogindId == true) {
-			return ResultData.from("F-6", Ut.f("이미 가입된 ID(%s) 입니다.", loginId));
+			return Ut.jsHistoryBack("F-6", Ut.f("이미 가입된 ID(%s) 입니다.", loginId));
 
 		}
 
 		Member member = memberService.getMemberByNameEmail(name, email);
 		if (member != null) {
-			return ResultData.from("F-7", Ut.f("이미 가입된 이름(%s), email(%s) 입니다.", name, email));
+			return Ut.jsHistoryBack("F-7", Ut.f("이미 가입된 이름(%s), email(%s) 입니다.", name, email));
 
 		}
-
 		memberService.doJoin(loginId, loginPw, name, email);
+		Member registerMember = memberService.getMemberByLoginId(loginId);
 
-		return ResultData.from("S-1", Ut.f("%d번 회원가입되었습니다.", member.getId()));
+		return Ut.jsReplace("S-1", Ut.f("%d번 회원가입되었습니다.", registerMember.getId()), "../member/loginPage");
 	}
 
 	@RequestMapping("/usr/member/loginPage")
 	public String loginPage(HttpSession session, String loginId, String loginPw) {
-		return "/usr/member/loginPage";
+		return "/usr/member/login";
 
 	}
 

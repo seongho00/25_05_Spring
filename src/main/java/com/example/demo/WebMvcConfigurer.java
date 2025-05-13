@@ -30,7 +30,7 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 				.addPathPatterns("/usr/member/doLogout");
 
 		registry.addInterceptor(needLogoutInterceptor).addPathPatterns("/usr/member/doLogin")
-				.addPathPatterns("/usr/member/doLoginPage");
+				.addPathPatterns("/usr/member/loginPage");
 
 		registry.addInterceptor(isExistInterceptor).addPathPatterns("/usr/article/doModofy")
 				.addPathPatterns("/usr/member/modifyPage").addPathPatterns("/usr/article/doDelete");

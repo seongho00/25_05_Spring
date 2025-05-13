@@ -7,7 +7,7 @@
 
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto">
-		<form action="../member/doLogin" method="POST">
+		<form action="../member/doJoin" method="POST">
 			<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
 				<tbody>
 					<tr>
@@ -22,15 +22,34 @@
 							<input name="loginPw" autocomplete="off" type="text" placeholder="비밀번호 입력" />
 						</td>
 					</tr>
+					<tr>
+						<th>비밀번호 확인</th>
+						<td style="text-align: center;">
+							<input name="checkPw" autocomplete="off" type="text" placeholder="비밀번호확인 입력" />
+						</td>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td style="text-align: center;">
+							<input name="name" autocomplete="off" type="text" placeholder="이름 입력" />
+						</td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td style="text-align: center;">
+							<input name="email" autocomplete="off" type="text" placeholder="이메일 입력" />
+						</td>
+					</tr>
 
 					<tr>
 						<th></th>
 						<td style="text-align: center;">
-							<input value="로그인" type="submit" />
+							<input value="회원가입" type="submit" />
 						</td>
 					</tr>
 
 				</tbody>
+				
 			</table>
 		</form>
 		<div class="btns">

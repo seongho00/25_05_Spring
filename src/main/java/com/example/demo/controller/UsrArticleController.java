@@ -28,7 +28,7 @@ public class UsrArticleController {
 
 	// 액션 메서드 (컨트롤러 메서드)
 	@RequestMapping("/usr/article/writePage")
-	public String writePage(HttpServletRequest req, String title, String body) {
+	public String writePage() {
 		return "/usr/article/write";
 
 	}

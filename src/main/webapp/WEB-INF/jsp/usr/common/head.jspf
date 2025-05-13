@@ -40,8 +40,11 @@
 						<a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline" href="../member/doLogout">LOGOUT</a>
 					</li>
 				</c:if>
+				<li>
+					<a class="hover:underline" href="../member/joinPage">REGISTER</a>
+				</li>
 			</ul>
 		</div>
 	</header>
-	
+
 	<h1>${pageTitle }</h1>
