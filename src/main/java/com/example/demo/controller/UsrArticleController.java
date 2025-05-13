@@ -31,15 +31,14 @@ public class UsrArticleController {
 
 	// 액션 메서드 (컨트롤러 메서드)
 	@RequestMapping("/usr/article/writePage")
-	public String writePage(HttpServletRequest req) {
+	public String writePage() {
 		return "/usr/article/write";
 
 	}
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpServletRequest req, String title, String body) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doWrite(String title, String body) {
 
 		if (Ut.isEmptyOrNull(title)) {
 			return Ut.jsHistoryBack("F-1", "제목을 입력하세요");
@@ -67,9 +66,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(HttpServletRequest req, Model model, int id) {
-
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String showDetail(Model model, int id) {
 
 		Article article = articleService.getForPrintArticleById(rq.getLoginedMemberId(), id);
 		if (rq.getLoginedMemberId() == article.getMemberId()) {
@@ -83,9 +80,8 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(HttpServletRequest req, int id) {
+	public String doDelete(int id) {
 
-		Rq rq = (Rq) req.getAttribute("rq");
 		if (rq.isLogined() == false) {
 			return Ut.jsReplace("F-1", "로그인 후 이용해주세요", "../member/loginPage");
 		}
@@ -124,8 +120,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doModify(int id, String title, String body) {
 
 		int loginedMemberId = rq.getLoginedMemberId();
 

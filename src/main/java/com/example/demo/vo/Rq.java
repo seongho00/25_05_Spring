@@ -34,11 +34,9 @@ public class Rq {
 		this.resp = resp;
 		this.session = req.getSession();
 
-		HttpSession httpSession = req.getSession();
-
-		if (httpSession.getAttribute("loginedMemberId") != null) {
+		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
-			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		}
 		this.req.setAttribute("rq", this);
 	}
@@ -73,6 +71,17 @@ public class Rq {
 
 	public void initBeforeActionInterceptor() {
 		System.err.println("initBeforeActionInterceptor 실행됨");
+	}
+
+	public void printReplace(String msg, String path) throws IOException {
+		resp.setContentType("text/html; charset=UTF-8");
+		println("<script>");
+		if (!Ut.isEmpty(msg)) {
+			println("alert('" + msg + "');");
+		}
+		println("location.replace('" + path + "');");
+		println("</script>");
+
 	}
 
 }

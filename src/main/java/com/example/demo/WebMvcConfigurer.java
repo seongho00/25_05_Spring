@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 import com.example.demo.interceptor.BeforeActionInterceptor;
-import com.example.demo.interceptor.IsExistInterceptor;
+
 import com.example.demo.interceptor.NeedLoginInterceptor;
 import com.example.demo.interceptor.NeedLogoutInterceptor;
 
@@ -17,8 +17,6 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 	NeedLoginInterceptor needLoginInterceptor;
 	@Autowired
 	NeedLogoutInterceptor needLogoutInterceptor;
-	@Autowired
-	IsExistInterceptor isExistInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -33,7 +31,5 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 				.addPathPatterns("/usr/member/loginPage").addPathPatterns("/usr/member/joinPage")
 				.addPathPatterns("/usr/member/doJoin");
 
-		registry.addInterceptor(isExistInterceptor).addPathPatterns("/usr/article/doModofy")
-				.addPathPatterns("/usr/member/modifyPage").addPathPatterns("/usr/article/doDelete");
 	}
 }

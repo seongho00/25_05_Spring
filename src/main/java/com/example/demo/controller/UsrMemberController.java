@@ -57,8 +57,7 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(HttpSession session, String loginId, String loginPw, String checkPw, String name,
-			String email) {
+	public String doJoin(String loginId, String loginPw, String checkPw, String name, String email) {
 
 		if (nullCheck(loginId, loginPw, name, email) != null) {
 			return nullCheck(loginId, loginPw, name, email);
@@ -95,8 +94,7 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doLogin(String loginId, String loginPw) {
 
 		if (nullCheck(loginId, loginPw) != null) {
 			return nullCheck(loginId, loginPw);
@@ -121,8 +119,7 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpServletRequest req) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doLogout() {
 
 		rq.logout();
 
