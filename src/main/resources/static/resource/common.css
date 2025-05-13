@@ -7,3 +7,7 @@ a {
 li {
 	list-style: none;
 }
+
+header>div>ul>li {
+	margin-right: 30px;
+}

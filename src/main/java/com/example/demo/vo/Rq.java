@@ -55,19 +55,11 @@ public class Rq {
 	}
 
 	public void logout() {
-		session.removeAttribute("loginedMember");
 		session.removeAttribute("loginedMemberId");
 	}
 
-	public void login(Member loginedMember) {
-		session.setAttribute("loginedMember", loginedMember);
-		session.setAttribute("loginedMemberId", loginedMember.getId());
-
-	}
-
-	public Article getArticle() {
-
-		return null;
+	public void login(Member member) {
+		session.setAttribute("loginedMemberId", member.getId());
 	}
 
 }

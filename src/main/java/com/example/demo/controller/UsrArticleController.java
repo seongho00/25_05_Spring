@@ -102,7 +102,6 @@ public class UsrArticleController {
 			articleService.deleteArticle(id);
 		}
 
-//		return ResultData.from(userCanDeleteRd.getResultCode(), userCanDeleteRd.getMsg());
 		return Ut.jsReplace(userCanDeleteRd.getResultCode(), userCanDeleteRd.getMsg(), "../article/list");
 
 	}

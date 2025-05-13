@@ -18,11 +18,6 @@ public class IsExistInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
 		Rq rq = (Rq) req.getAttribute("rq");
 
-		Article article = rq.getArticle();
-
-		if (article == null) {
-			rq.printHistoryBack("게시글이 없습니다");
-		}
 		return HandlerInterceptor.super.preHandle(req, resp, handler);
 
 	}
