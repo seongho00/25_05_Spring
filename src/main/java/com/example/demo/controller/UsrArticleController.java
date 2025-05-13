@@ -22,13 +22,16 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UsrArticleController {
 
+	@Autowired
+	private Rq rq;
+
 	// new ArticleService를 대체
 	@Autowired
 	ArticleService articleService;
 
 	// 액션 메서드 (컨트롤러 메서드)
 	@RequestMapping("/usr/article/writePage")
-	public String writePage() {
+	public String writePage(HttpServletRequest req) {
 		return "/usr/article/write";
 
 	}
@@ -89,7 +92,7 @@ public class UsrArticleController {
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
-//			return ResultData.from("F-1", Ut.f("%d번 게시글은 없습니다", id));
+
 			return Ut.jsHistoryBack("F-2", Ut.f("%d번 게시글은 없습니다", id));
 		}
 
@@ -107,7 +110,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/modifyPage")
-	public String showModifyPage(HttpServletRequest req, Model model, int id) {
+	public String showModifyPage(Model model, int id) {
 
 		Article article = articleService.getArticleById(id);
 		// 게시글 존재

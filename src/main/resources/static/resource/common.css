@@ -11,3 +11,7 @@ li {
 header>div>ul>li {
 	margin-right: 30px;
 }
+
+.write {
+	margin-left: auto;
+}
