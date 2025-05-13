@@ -96,10 +96,6 @@ public class UsrMemberController {
 	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
 		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (rq.isLogined()) {
-			return Ut.jsHistoryBack("F-A", "이미 로그인 함");
-		}
-
 		if (nullCheck(loginId, loginPw) != null) {
 			return nullCheck(loginId, loginPw);
 		}
@@ -116,7 +112,6 @@ public class UsrMemberController {
 		}
 
 		rq.login(loginedMember);
-		
 
 		return Ut.jsReplace("S-1", Ut.f("%s님 환영합니다.", loginedMember.getName()), "/");
 
@@ -126,10 +121,6 @@ public class UsrMemberController {
 	@ResponseBody
 	public String doLogout(HttpServletRequest req) {
 		Rq rq = (Rq) req.getAttribute("rq");
-
-		if (!rq.isLogined()) {
-			return Ut.jsHistoryBack("F-A", Ut.f("이미 로그아웃 중"));
-		}
 
 		rq.logout();
 

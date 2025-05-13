@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 
 public class Rq {
+
 	@Getter
 	private boolean isLogined;
 	@Getter
@@ -27,11 +28,10 @@ public class Rq {
 
 		HttpSession httpSession = req.getSession();
 
-		if (httpSession.getAttribute("loginedMember") != null) {
+		if (httpSession.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
 		}
-
 	}
 
 	public void printHistoryBack(String msg) throws IOException {
@@ -44,7 +44,7 @@ public class Rq {
 		println("</script>");
 
 	}
-	
+
 	private void println(String str) throws IOException {
 		print(str + "\n");
 
@@ -63,6 +63,11 @@ public class Rq {
 		session.setAttribute("loginedMember", loginedMember);
 		session.setAttribute("loginedMemberId", loginedMember.getId());
 
+	}
+
+	public Article getArticle() {
+
+		return null;
 	}
 
 }

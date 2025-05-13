@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 import com.example.demo.interceptor.BeforeActionInterceptor;
+import com.example.demo.interceptor.IsExistInterceptor;
 import com.example.demo.interceptor.NeedLoginInterceptor;
+import com.example.demo.interceptor.NeedLogoutInterceptor;
 
 @Configuration
 public class WebMvcConfigurer implements org.springframework.web.servlet.config.annotation.WebMvcConfigurer {
@@ -13,13 +15,24 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 	BeforeActionInterceptor beforeActionInterceptor;
 	@Autowired
 	NeedLoginInterceptor needLoginInterceptor;
+	@Autowired
+	NeedLogoutInterceptor needLogoutInterceptor;
+	@Autowired
+	IsExistInterceptor isExistInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**");
 
 		registry.addInterceptor(needLoginInterceptor).addPathPatterns("/usr/article/doModify")
-				.addPathPatterns("/usr/article/modifyPage").addPathPatterns("/usr/article/doWrite")
-				.addPathPatterns("/usr/article/doDelete").addPathPatterns("/usr/member/doLogout");
+				.addPathPatterns("/usr/article/modifyPage").addPathPatterns("/usr/article/writePage")
+				.addPathPatterns("/usr/article/doWrite").addPathPatterns("/usr/article/doDelete")
+				.addPathPatterns("/usr/member/doLogout");
+
+		registry.addInterceptor(needLogoutInterceptor).addPathPatterns("/usr/member/doLogin")
+				.addPathPatterns("/usr/member/doLoginPage");
+
+		registry.addInterceptor(isExistInterceptor).addPathPatterns("/usr/article/doModofy")
+				.addPathPatterns("/usr/member/modifyPage").addPathPatterns("/usr/article/doDelete");
 	}
 }
