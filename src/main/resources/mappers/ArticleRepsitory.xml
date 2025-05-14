@@ -37,19 +37,35 @@
 
 	<select id="getArticleById" parameterType="int"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.name AS extra__writer 
+		SELECT A.*, M.name AS extra__writer, B.name AS extra__boardName
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
-		WHERE A.id = #{id}
+		INNER JOIN board AS B
+		ON A.boardId = B.id
+		WHERE A.id =#{id}
 	</select>
 
 	<select id="getArticles"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.name AS extra__writer 
+		SELECT A.*, M.name AS extra__writer, B.name AS extra__boardName
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
+		INNER JOIN board AS B
+		ON A.boardId = B.id
+		ORDER BY id DESC
+	</select>
+
+	<select id="getArticlesByBoardId"
+		resultType="com.example.demo.vo.Article">
+		SELECT A.*, M.name AS extra__writer, B.name AS extra__boardName
+		FROM article AS A
+		INNER JOIN `member` AS M
+		ON A.memberId = M.id
+		INNER JOIN board AS B
+		ON A.boardId = B.id
+		WHERE A.boardId = ${boardId}
 		ORDER BY id DESC
 	</select>
 

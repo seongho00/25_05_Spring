@@ -14,6 +14,10 @@
 					<td style="text-align: center;">${article.id}</td>
 				</tr>
 				<tr>
+					<th style="text-align: center;">Board</th>
+					<td style="text-align: center;">${article.extra__boardName}</td>
+				</tr>
+				<tr>
 					<th style="text-align: center;">Registration Date</th>
 					<td style="text-align: center;">${article.regDate}</td>
 				</tr>

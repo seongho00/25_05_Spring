@@ -14,8 +14,10 @@ public class Article {
 	String title;
 	String body;
 	int memberId;
+	int boardId;
 	boolean userCanModify;
 	boolean userCanDelete;
 	String extra__writer;
+	String extra__boardName;
 
 }

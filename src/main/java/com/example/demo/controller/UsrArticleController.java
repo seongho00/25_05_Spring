@@ -57,8 +57,12 @@ public class UsrArticleController {
 	public String showList(Model model, int boardId) {
 
 		Board board = boardService.getBoardById(boardId);
-
-		List<Article> articles = articleService.getArticles();
+		List<Article> articles = null;
+		if (boardId == 0) {
+			articles = articleService.getArticles();
+		} else {
+			articles = articleService.getArticlesByBoardId(boardId);
+		}
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);

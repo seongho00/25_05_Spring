@@ -84,4 +84,9 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 게시글을 삭제함", article.getId()));
 	}
 
+	public List<Article> getArticlesByBoardId(int boardId) {
+
+		return articleRepository.getArticlesByBoardId(boardId);
+	}
+
 }
