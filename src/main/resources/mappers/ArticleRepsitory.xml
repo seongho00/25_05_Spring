@@ -38,10 +38,12 @@
 
 	<select id="getArticleById" parameterType="int"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.name AS extra__writer, B.name AS extra__boardName
+		SELECT A.*, M.name AS extra__writer, B.name AS
+		extra__boardName
 		FROM article AS A
 		INNER JOIN `member` AS M
-		ON A.memberId = M.id
+		ON A.memberId
+		= M.id
 		INNER JOIN board AS B
 		ON A.boardId = B.id
 		WHERE A.id =#{id}
@@ -49,31 +51,50 @@
 
 	<select id="getArticles"
 		resultType="com.example.demo.vo.Article">
-		SELECT A.*, M.name AS extra__writer, B.name AS extra__boardName
+		SELECT A.*, M.name AS extra__writer, B.name AS
+		extra__boardName
 		FROM article AS A
 		INNER JOIN `member` AS M
-		ON A.memberId = M.id
+		ON A.memberId
+		= M.id
 		INNER JOIN board AS B
 		ON A.boardId = B.id
 		ORDER BY id DESC
-		LIMIT ${limitFrom}, ${viewArticleCount}
+		LIMIT
+		${limitFrom}, ${viewArticleCount}
 	</select>
 
 	<select id="getArticlesByBoardId"
 		resultType="com.example.demo.vo.Article">
 		SELECT A.*, M.name AS extra__writer, B.name AS extra__boardName
-		FROM article AS A
+		FROM
+		article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
-		INNER JOIN board AS B
+		INNER JOIN
+		board AS B
 		ON A.boardId = B.id
-		<if test="boardId != 0">WHERE A.boardId = ${boardId}</if>
-		<if test="keyword.length() != 0">AND A.title LIKE '%${keyword}%'</if>
+
+		<if test="keyword.length() != 0">
+			<if test="keywordType.equals('title')">
+				WHERE A.title LIKE '%${keyword}%'
+			</if>
+			<if test="keywordType.equals('body')">
+				WHERE A.body LIKE '%${keyword}%'
+			</if>
+
+			<if test="keywordType.equals('writer')">
+				WHERE M.name LIKE '%${keyword}%'
+			</if>
+
+		</if>
+		<if test="boardId != 0">AND A.boardId = ${boardId}</if>
+
 		ORDER BY id DESC
 		LIMIT ${limitFrom}, ${viewArticleCount}
 	</select>
 
-	
+
 	<select id="getTotalArticleCount" resultType="int">
 		SELECT COUNT(*)
 		FROM article

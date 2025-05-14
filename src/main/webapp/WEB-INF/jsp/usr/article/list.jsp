@@ -57,7 +57,13 @@
 				<option value="3">QnA</option>
 			</select>
 
-			<input type="text" name="keyword" />
+			<select class="select select-primary" name="keywordType">
+				<option value="title" selected>제목</option>
+				<option value="body">내용</option>
+				<option value="writer">작성자</option>
+			</select>
+
+			<input type="text" name="keyword" autocomplete="off" />
 			<button>검색하기</button>
 		</form>
 	</div>

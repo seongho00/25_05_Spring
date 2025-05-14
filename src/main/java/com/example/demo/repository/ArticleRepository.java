@@ -21,7 +21,8 @@ public interface ArticleRepository {
 
 	public int getLastInsertId();
 
-	public List<Article> getArticlesByBoardId(int boardId, int limitFrom, int viewArticleCount, String keyword);
+	public List<Article> getArticlesByBoardId(int boardId, int limitFrom, int viewArticleCount, String keyword,
+			String keywordType);
 
 	public int getTotalArticleCount();
 
