@@ -17,10 +17,12 @@ public interface ArticleRepository {
 
 	public void modifyArticle(int id, String title, String body);
 
-	public List<Article> getArticles();
+	public List<Article> getArticles(int limitFrom, int viewArticleCount);
 
 	public int getLastInsertId();
 
-	public List<Article> getArticlesByBoardId(int boardId);
+	public List<Article> getArticlesByBoardId(int boardId, int limitFrom, int viewArticleCount);
+
+	public int getTotalArticleCount();
 
 }

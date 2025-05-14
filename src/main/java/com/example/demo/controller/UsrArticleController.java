@@ -54,14 +54,44 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId) {
+	public String showList(Model model, int boardId, int page) {
+
+		int viewArticleCount = 10;
+
+		int limitFrom = (page - 1) * viewArticleCount;
+
+		int totalCnt = articleService.getTotalArticleCount();
+
+		int totalPage = (int) Math.ceil(totalCnt / (double) viewArticleCount);
+
+//		int viewPage = 1;
+//		int viewPageCount = 10;
+//		String inputedviewPage = request.getParameter("viewPage");
+//		int viewTotalPage = (int) Math.ceil(totalPage / (double) viewPageCount);
+//
+//		if (inputedviewPage != null) {
+//			viewPage = Integer.parseInt(inputedviewPage);
+//		}
+//		if (viewPage <= 0) {
+//			viewPage = 1;
+//		}
+//		if (viewPage > viewTotalPage) {
+//			viewPage = viewTotalPage;
+//		}
+//
+//		int viewPageLimitFrom = (viewPage - 1) * viewPageCount + 1;
+//		int viewPageLimitTo = viewPage * viewPageCount;
+//		if (viewPageLimitTo > totalPage) {
+//			viewPageLimitTo = totalPage;
+//		}
 
 		Board board = boardService.getBoardById(boardId);
+
 		List<Article> articles = null;
 		if (boardId == 0) {
-			articles = articleService.getArticles();
+			articles = articleService.getArticles(limitFrom, viewArticleCount);
 		} else {
-			articles = articleService.getArticlesByBoardId(boardId);
+			articles = articleService.getArticlesByBoardId(boardId, limitFrom, viewArticleCount);
 		}
 
 		model.addAttribute("articles", articles);

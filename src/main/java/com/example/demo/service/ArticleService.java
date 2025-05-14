@@ -36,9 +36,9 @@ public class ArticleService {
 
 	}
 
-	public List<Article> getArticles() {
+	public List<Article> getArticles(int limitFrom, int viewArticleCount) {
 
-		return articleRepository.getArticles();
+		return articleRepository.getArticles(limitFrom, viewArticleCount);
 	}
 
 	public void deleteArticle(int id) {
@@ -84,9 +84,14 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 게시글을 삭제함", article.getId()));
 	}
 
-	public List<Article> getArticlesByBoardId(int boardId) {
+	public List<Article> getArticlesByBoardId(int boardId, int limitFrom, int viewArticleCount) {
 
-		return articleRepository.getArticlesByBoardId(boardId);
+		return articleRepository.getArticlesByBoardId(boardId, limitFrom, viewArticleCount);
+	}
+
+	public int getTotalArticleCount() {
+
+		return articleRepository.getTotalArticleCount();
 	}
 
 }

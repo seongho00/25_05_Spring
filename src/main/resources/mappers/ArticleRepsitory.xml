@@ -55,6 +55,7 @@
 		INNER JOIN board AS B
 		ON A.boardId = B.id
 		ORDER BY id DESC
+		LIMIT ${limitFrom}, ${viewArticleCount}
 	</select>
 
 	<select id="getArticlesByBoardId"
@@ -67,6 +68,13 @@
 		ON A.boardId = B.id
 		WHERE A.boardId = ${boardId}
 		ORDER BY id DESC
+		LIMIT ${limitFrom}, ${viewArticleCount}
+	</select>
+
+	
+	<select id="getTotalArticleCount" resultType="int">
+		SELECT COUNT(*)
+		FROM article
 	</select>
 
 </mapper>
