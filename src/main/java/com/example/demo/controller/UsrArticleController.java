@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
@@ -37,7 +39,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(String title, String body) {
+	public String doWrite(String title, String body, String boardId) {
 
 		if (Ut.isEmptyOrNull(title)) {
 			return Ut.jsHistoryBack("F-1", "제목을 입력하세요");
@@ -46,19 +48,21 @@ public class UsrArticleController {
 		if (Ut.isEmptyOrNull(body)) {
 			return Ut.jsHistoryBack("F-2", "내용을 입력하세요");
 		}
+		if (Ut.isEmptyOrNull(boardId)) {
+			return Ut.jsHistoryBack("F-3", "boardId을 입력하세요");
+		}
 
 		int memberId = rq.getLoginedMemberId();
-		int id = articleService.writeArticle(body, title, memberId);
+
+		int id = articleService.writeArticle(body, title, memberId, boardId);
+
 		Article article = articleService.getArticleById(id);
 		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 작성되었습니다.", id), "../article/list");
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId, int page, int viewPage) {
+	public String showList(Model model, int boardId, int page) {
 
-		if (page <= 0) {
-			page = 1;
-		}
 		int viewArticleCount = 10;
 		int viewPageCount = 10;
 
@@ -68,19 +72,13 @@ public class UsrArticleController {
 
 		int totalPage = (int) Math.ceil(totalCnt / (double) viewArticleCount);
 
-		int viewTotalPage = (int) Math.ceil(totalPage / (double) viewPageCount);
+		int viewPage = (int) Math.ceil(page / (double) viewPageCount);
 
-		if (viewPage <= 0) {
-			viewPage = 1;
+		if (page <= 0) {
+			page = 1;
 		}
-		if (viewPage > viewTotalPage) {
-			viewPage = viewTotalPage;
-		}
-
-		int viewPageLimitFrom = (viewPage - 1) * viewPageCount + 1;
-		int viewPageLimitTo = viewPage * viewPageCount;
-		if (viewPageLimitTo > totalPage) {
-			viewPageLimitTo = totalPage;
+		if (page > totalPage - 1) {
+			page = totalPage - 1;
 		}
 
 		Board board = boardService.getBoardById(boardId);
@@ -94,8 +92,8 @@ public class UsrArticleController {
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
-		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("page", page);
+		model.addAttribute("viewPage", viewPage);
 
 		return "/usr/article/list";
 
@@ -142,14 +140,14 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/modifyPage")
-	public String showModifyPage(Model model, int id) {
+	public String showModifyPage(Model model, int id) throws IOException {
 
 		Article article = articleService.getArticleById(id);
 
 		// 권한체크
 
 		if (article == null) {
-			return Ut.jsHistoryBack("F-1", Ut.f("%d번 게시글은 없습니다", id));
+			rq.printHistoryBack(Ut.f("%d번 게시글은 없습니다", id));
 		}
 
 		model.addAttribute("article", article);

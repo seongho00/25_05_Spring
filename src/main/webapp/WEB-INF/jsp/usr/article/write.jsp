@@ -7,27 +7,45 @@
 
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto">
-		<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
-			<tbody>
-				<form action="doWrite">
-					<input type="hidden" name="id" value="${id }" />
-					<label for="">
-						제목 :
-						<input type="text" name="title" />
-					</label>
-					<label for="">
-						내용 :
-						<input type="text" name="body" />
-					</label>
+		<form action="doWrite" method="POST">
+			<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+				<tbody>
+					<tr>
+						<th style="text-align: center;">게시판 입력</th>
+						<td style="text-align: center;">
+							<select class="select select-primary" name="boardId">
+								<option value="" disabled selected>Pick a text editor</option>
+								<option value="1">공지사항</option>
+								<option value="2">자유</option>
+								<option value="3">QnA</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th style="text-align: center;">제목</th>
+						<td style="text-align: center;">
+							<input class="input input-primary input-sm" name="title" type="text" autocomplete="off" placeholder="제목" />
+						</td>
+					</tr>
+					<tr>
+						<th style="text-align: center;">내용</th>
+						<td style="text-align: center;">
+							<input class="input input-primary input-sm" name="body" type="text" autocomplete="off" placeholder="내용" />
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td style="text-align: center;">
+							<button class="btn btn-primary">작성</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
-					<button type="submit">글쓰기</button>
-				</form>
-			</tbody>
-		</table>
-
+		</form>
 	</div>
 
-	</div>
+
 </section>
 
 <%@ include file="../common/foot.jspf"%>
