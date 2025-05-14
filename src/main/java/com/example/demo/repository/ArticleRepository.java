@@ -24,6 +24,6 @@ public interface ArticleRepository {
 	public List<Article> getArticlesByBoardId(int boardId, int limitFrom, int viewArticleCount, String keyword,
 			String keywordType);
 
-	public int getTotalArticleCount(int boardId);
+	public int getTotalArticleCount(int boardId, String keyword, String keywordType);
 
 }

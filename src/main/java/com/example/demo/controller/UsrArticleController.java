@@ -73,13 +73,12 @@ public class UsrArticleController {
 
 		int limitFrom = (page - 1) * viewArticleCount;
 
-		int totalCnt = articleService.getTotalArticleCount(boardId);
+		int totalCnt = articleService.getTotalArticleCount(boardId, keyword, keywordType);
 
 		int totalPage = (int) Math.ceil(totalCnt / (double) viewArticleCount);
 
 		int viewPage = (int) Math.ceil(page / (double) viewPageCount);
-		System.out.println(viewPage);
-		System.out.println(totalPage);
+
 		int endPage = viewPage * 10 < totalPage ? viewPage * 10 : totalPage;
 
 		if (page > totalPage - 1) {
@@ -98,6 +97,7 @@ public class UsrArticleController {
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("boardId", boardId);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("keywordType", keywordType);
 
 		return "/usr/article/list";
 
