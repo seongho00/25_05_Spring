@@ -30,9 +30,18 @@
 						<td style="text-align: center;">${article.extra__writer }</td>
 					</tr>
 				</c:forEach>
+
+
 			</tbody>
+
+
+
 		</table>
-		<button class="write" type="button" onclick="location.replace('../article/writePage')">글쓰기</button>
+
+		<c:forEach begin="0" end="${totalPage - 1}" varStatus="status">
+			<a href="../article/list?boardId=0&page=${status.count }&viewPage=1">${status.count }</a>
+		</c:forEach>
+
 	</div>
 </section>
 
