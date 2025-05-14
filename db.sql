@@ -1,30 +1,62 @@
-DROP DATABASE IF EXISTS 25_05_Spring;
-CREATE DATABASE 25_05_Spring;
-USE 25_05_Spring;
+DROP DATABASE IF EXISTS `25_05_Spring`;
+CREATE DATABASE `25_05_Spring`;
+USE `25_05_Spring`;
 
 # 게시글 테이블 생성
 CREATE TABLE article (
-                         id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                         regDate DATETIME NOT NULL,
-                         updateDate DATETIME NOT NULL,
-                         title CHAR(100) NOT NULL,
-                         `body` TEXT NOT NULL,
-                         memberId INT(10) UNSIGNED NOT NULL
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	title CHAR(100) NOT NULL,
+	`body` TEXT NOT NULL
 );
 
+# 회원 테이블 생성
 CREATE TABLE `member` (
-                         id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                         regDate DATETIME NOT NULL,
-                         updateDate DATETIME NOT NULL,
-                         loginId CHAR(100) NOT NULL,
-                         loginPw CHAR(100) NOT NULL,
-                         email CHAR(100) NOT NULL,
-                         `authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한레벨 (3: 일반, 7: 관리자)',
-                         `name` CHAR(100) NOT NULL,
-                         delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0: 탈퇴 전 , 1: 탈퇴 후)',
-                         delDate DATETIME COMMENT '탈퇴 날짜'
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId CHAR(30) NOT NULL,
+	loginPw CHAR(100) NOT NULL,
+	`authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한 레벨 (3=일반,7=관리자)', 
+	`name` CHAR(20) NOT NULL,
+	nickname CHAR(20) NOT NULL,
+	cellphoneNum CHAR(20) NOT NULL,
+	email CHAR(20) NOT NULL,
+	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (0=탈퇴 전, 1=탈퇴 후)',
+	delDate DATETIME COMMENT '탈퇴 날짜'
 );
 
+
+# 게시판(board) 테이블 생성
+CREATE TABLE board (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	`code` CHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항) free(자유) QnA(질의응답)...',
+	`name` CHAR(20) NOT NULL UNIQUE COMMENT '게시판 이름',
+	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1=삭제 후)',
+	delDate DATETIME COMMENT '삭제 날짜'
+);
+
+# 게시판(board) 테스트 데이터 생성
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'notice',
+`name` = '공지사항';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'free',
+`name` = '자유';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'QnA',
+`name` = '질의응답';
 
 
 # 게시글 테스트 데이터 생성
@@ -32,81 +64,137 @@ INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목1',
-`body` = '내용1',
-memberId = '1';
-
+`body` = '내용1';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목2',
-`body` = '내용2',
-memberId = '1';
+`body` = '내용2';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목3',
-`body` = '내용2',
-memberId = '2';
+`body` = '내용3';
 
-# 멤버 테스트 데이터 생성
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = '제목4',
+`body` = '내용4';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+title = '제목5',
+`body` = '내용5';
+
+# 회원 테스트 데이터 생성
+# 관리자
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = "test1",
-loginPw = "test1",
-`name` = "이름1",
-email = "test1@gmail.com";
-
-INSERT INTO `member`
-SET regDate = NOW(),
-updateDate = NOW(),
-loginId = "test2",
-loginPw = "test2",
-`name` = "이름2",
-email = "test2@gmail.com";
-
-INSERT INTO `member`
-SET regDate = NOW(),
-updateDate = NOW(),
-loginId = "test3",
-loginPw = "test3",
-`name` = "이름3",
-email = "test3@gmail.com";
-
-INSERT INTO `member`
-SET regDate = NOW(),
-updateDate = NOW(),
-loginId = "123",
-loginPw = "123",
+loginId = 'admin',
+loginPw = 'admin',
 `authLevel` = 7,
-`name` = "123",
-email = "123@gmail.com";
+`name` = '관리자',
+nickname = '관리자_닉네임',
+cellphoneNum = '01012341234',
+email = 'abc@gmail.com';
 
+# 회원
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = 'test1',
+`name` = '회원1_이름',
+nickname = '회원1_닉네임',
+cellphoneNum = '01043214321',
+email = 'abcd@gmail.com';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = '회원2_이름',
+nickname = '회원2_닉네임',
+cellphoneNum = '01056785678',
+email = 'abcde@gmail.com';
+
+# memberId 추가
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+UPDATE article 
+SET memberId = 2
+WHERE id IN (1,2);
+
+UPDATE article 
+SET memberId = 3
+WHERE id IN (3,4,5);
+
+# boardId 추가
+ALTER TABLE article ADD COLUMN boardId INT(10) NOT NULL AFTER `memberId`;
+
+UPDATE article 
+SET boardId = 1
+WHERE id IN (1,2);
+
+UPDATE article 
+SET boardId = 2
+WHERE id IN (3,4);
+
+UPDATE article 
+SET boardId = 3
+WHERE id = 5;
+
+
+######################################################################
 
 SELECT *
 FROM article
 ORDER BY id DESC;
 
 SELECT *
-FROM `member`
+FROM `member`;
 
-SELECT * FROM `member`   WHERE loginId = 123
+SELECT *
+FROM board;
 
-SELECT * 
-FROM `member`
-WHERE `name` = '이름2' AND email = '이름2'
+SELECT A.*, M.name AS extra__writer, B.name AS extra__boardName
+		FROM article AS A
+		INNER JOIN `member` AS M
+		ON A.memberId = M.id
+		INNER JOIN board AS B
+		ON A.boardId = B.id
+	
+		WHERE A.title LIKE '%%'
+		
+		ORDER BY id DESC
+		LIMIT 0, 10
 
 
 ######################################################################
 
+SELECT LAST_INSERT_ID();
+
+DELETE FROM article WHERE id = 4;
+
+SELECT * FROM `member`
+WHERE loginId = 'test4'
+
+SELECT CEILING(RAND() * 3);
+
 # 게시글 데이터 대량 생성
 INSERT INTO article
 SET regDate = NOW(),
-title = CONCAT('제목',SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
-`body` = CONCAT('내용',SUBSTRING(RAND() * 1000 FROM 1 FOR 2)),
-memberId = CEILING(RAND()*3);
+updateDate = NOW(),
+memberId = CEILING(RAND() * 3),
+boardId = CEILING(RAND() * 3),
+title = CONCAT('제목__', RAND()),
+`body` = CONCAT('내용__',RAND());
 
 # 회원 데이터 대량 생성
 INSERT INTO `member`
