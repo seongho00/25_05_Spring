@@ -41,24 +41,23 @@
 		</table>
 
 		<div style="text-align: center;">
-			<a href="../article/list?boardId=0&page=${page - 1}"><</a>
+			<a href="../article/list?boardId=${boardId }&page=${page - 1}&keyword=${keyword}"><</a>
 			<c:forEach begin="${(viewPage - 1) * 10 +1}" end="${(viewPage) * 10}" varStatus="status">
-				<a style="padding: 5px;" href="../article/list?boardId=0&page=${status.count }">${status.index}</a>
+				<a style="padding: 5px;" href="../article/list?boardId=${boardId }&page=${status.count }&keyword=${keyword}">${status.index}</a>
 			</c:forEach>
-			<a href="../article/list?boardId=0&page=${page + 1}"">></a>
+			<a href="../article/list?boardId=${boardId }&page=${page + 1}&keyword=${keyword}"">></a>
 		</div>
 
 		<form action="list">
-			<input type="hidden" value="0" name="page"/>
+			<input type="hidden" value="0" name="page" />
 			<select class="select select-primary" name="boardId">
-				<option value="1" disabled selected>게시판 선택</option>
-				<option value="0">전체</option>
+				<option value="0" selected>전체</option>
 				<option value="1">공지사항</option>
 				<option value="2">자유</option>
 				<option value="3">QnA</option>
 			</select>
 
-			<input type="text" name="keyword"/>
+			<input type="text" name="keyword" />
 			<button>검색하기</button>
 		</form>
 	</div>

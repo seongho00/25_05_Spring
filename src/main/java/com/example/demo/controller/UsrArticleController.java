@@ -56,13 +56,12 @@ public class UsrArticleController {
 
 		int id = articleService.writeArticle(body, title, memberId, boardId);
 
-		Article article = articleService.getArticleById(id);
-		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 작성되었습니다.", id), "../article/list");
+		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 작성되었습니다.", id), "../article/list?boardId=0&page=1");
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId, int page, @RequestParam(defaultValue = "") String keyword)
-			throws IOException {
+	public String showList(Model model, @RequestParam(defaultValue = "0") int boardId, int page,
+			@RequestParam(defaultValue = "") String keyword) throws IOException {
 
 		if (page <= 0) {
 			page = 1;
@@ -90,6 +89,8 @@ public class UsrArticleController {
 		model.addAttribute("board", board);
 		model.addAttribute("page", page);
 		model.addAttribute("viewPage", viewPage);
+		model.addAttribute("boardId", boardId);
+		model.addAttribute("keyword", keyword);
 
 		return "/usr/article/list";
 
