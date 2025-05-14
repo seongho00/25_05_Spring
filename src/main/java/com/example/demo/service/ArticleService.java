@@ -84,9 +84,9 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 게시글을 삭제함", article.getId()));
 	}
 
-	public List<Article> getArticlesByBoardId(int boardId, int limitFrom, int viewArticleCount) {
+	public List<Article> getArticlesByBoardId(int boardId, int limitFrom, int viewArticleCount, String keyword) {
 
-		return articleRepository.getArticlesByBoardId(boardId, limitFrom, viewArticleCount);
+		return articleRepository.getArticlesByBoardId(boardId, limitFrom, viewArticleCount, keyword);
 	}
 
 	public int getTotalArticleCount() {

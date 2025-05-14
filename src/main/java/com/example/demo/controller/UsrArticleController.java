@@ -61,8 +61,12 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId, int page) {
+	public String showList(Model model, int boardId, int page, @RequestParam(defaultValue = "") String keyword)
+			throws IOException {
 
+		if (page <= 0) {
+			page = 1;
+		}
 		int viewArticleCount = 10;
 		int viewPageCount = 10;
 
@@ -74,21 +78,13 @@ public class UsrArticleController {
 
 		int viewPage = (int) Math.ceil(page / (double) viewPageCount);
 
-		if (page <= 0) {
-			page = 1;
-		}
 		if (page > totalPage - 1) {
 			page = totalPage - 1;
 		}
 
 		Board board = boardService.getBoardById(boardId);
 
-		List<Article> articles = null;
-		if (boardId == 0) {
-			articles = articleService.getArticles(limitFrom, viewArticleCount);
-		} else {
-			articles = articleService.getArticlesByBoardId(boardId, limitFrom, viewArticleCount);
-		}
+		List<Article> articles = articleService.getArticlesByBoardId(boardId, limitFrom, viewArticleCount, keyword);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);

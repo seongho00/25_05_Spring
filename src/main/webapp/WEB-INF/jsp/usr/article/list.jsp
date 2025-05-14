@@ -6,6 +6,8 @@
 
 <section class="mt-24 text-xl px-4">
 	<div class="mx-auto">
+
+
 		<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
 			<thead>
 				<tr>
@@ -46,7 +48,19 @@
 			<a href="../article/list?boardId=0&page=${page + 1}"">></a>
 		</div>
 
+		<form action="list">
+			<input type="hidden" value="0" name="page"/>
+			<select class="select select-primary" name="boardId">
+				<option value="1" disabled selected>게시판 선택</option>
+				<option value="0">전체</option>
+				<option value="1">공지사항</option>
+				<option value="2">자유</option>
+				<option value="3">QnA</option>
+			</select>
 
+			<input type="text" name="keyword"/>
+			<button>검색하기</button>
+		</form>
 	</div>
 </section>
 

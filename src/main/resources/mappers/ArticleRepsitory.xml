@@ -67,7 +67,8 @@
 		ON A.memberId = M.id
 		INNER JOIN board AS B
 		ON A.boardId = B.id
-		WHERE A.boardId = ${boardId}
+		<if test="boardId != 0">WHERE A.boardId = ${boardId}</if>
+		<if test="keyword.length() != 0">AND A.title LIKE '%${keyword}%'</if>
 		ORDER BY id DESC
 		LIMIT ${limitFrom}, ${viewArticleCount}
 	</select>
