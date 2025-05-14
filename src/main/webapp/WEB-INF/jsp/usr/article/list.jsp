@@ -38,9 +38,14 @@
 
 		</table>
 
-		<c:forEach begin="0" end="${totalPage - 1}" varStatus="status">
-			<a href="../article/list?boardId=0&page=${status.count }&viewPage=1">${status.count }</a>
-		</c:forEach>
+		<div style="text-align: center;">
+			<a href="../article/list?boardId=0&page=${page - 1}&viewPage=1"><</a>
+			<c:forEach begin="0" end="${totalPage - 1}" varStatus="status">
+				<a style="padding: 5px;" href="../article/list?boardId=0&page=${status.count }&viewPage=1">${status.count }</a>
+			</c:forEach>
+			<a href="../article/list?boardId=0&page=${page + 1}&viewPage=1"">></a>
+		</div>
+
 
 	</div>
 </section>

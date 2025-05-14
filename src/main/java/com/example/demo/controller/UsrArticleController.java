@@ -56,9 +56,12 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/list")
 	public String showList(Model model, int boardId, int page, int viewPage) {
 
+		if (page <= 0) {
+			page = 1;
+		}
 		int viewArticleCount = 10;
 		int viewPageCount = 10;
-		
+
 		int limitFrom = (page - 1) * viewArticleCount;
 
 		int totalCnt = articleService.getTotalArticleCount();
@@ -92,6 +95,7 @@ public class UsrArticleController {
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
 		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("page", page);
 
 		return "/usr/article/list";
 
