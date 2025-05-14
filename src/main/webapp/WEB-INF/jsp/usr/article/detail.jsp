@@ -41,6 +41,10 @@
 					<th style="text-align: center;">Writer</th>
 					<td style="text-align: center;">${article.extra__writer }</td>
 				</tr>
+				<tr>
+					<td></td>
+				</tr>
+
 			</tbody>
 		</table>
 		<div class="btns">
@@ -53,8 +57,15 @@
 			<button type="button" onclick="history.back();">뒤로가기</button>
 		</div>
 
+		<div>
+			<form action="">
+				<label class="heart-checkbox">
+					<input type="checkbox" name="like" value="1" onclick="location.replace('/')" />
+					<span class="heart"></span>
 
-
+				</label>
+			</form>
+		</div>
 
 	</div>
 </section>

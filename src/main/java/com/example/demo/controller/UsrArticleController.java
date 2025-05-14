@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class UsrArticleController {
@@ -95,21 +98,19 @@ public class UsrArticleController {
 		model.addAttribute("page", page);
 		model.addAttribute("viewPage", viewPage);
 		model.addAttribute("endPage", endPage);
-		model.addAttribute("boardId", boardId);
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("keywordType", keywordType);
 
 		return "/usr/article/list";
 
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(Model model, int id) {
+	public String showDetail(Model model, int id, HttpServletRequest req) {
 
 		Article article = articleService.getForPrintArticleById(rq.getLoginedMemberId(), id);
 		if (rq.getLoginedMemberId() == article.getMemberId()) {
 			article.setUserCanModify(true);
 		}
+
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 

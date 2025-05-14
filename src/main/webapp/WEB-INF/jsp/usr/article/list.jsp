@@ -44,33 +44,40 @@
 
 		</table>
 
-		<div style="text-align: center;">
-			<a href="../article/list?boardId=${boardId }&page=${page - 1}&keyword=${keyword}&keywordType=${keywordType}"><</a>
-			<c:forEach begin="${(viewPage - 1) * 10 +1}" end="${endPage}" varStatus="status">
-				<a style="padding: 5px;"
-					href="../article/list?boardId=${boardId }&page=${status.index }&keyword=${keyword}&keywordType=${keywordType}">${status.index}</a>
-			</c:forEach>
-			<a href="../article/list?boardId=${boardId }&page=${page + 1}&keyword=${keyword}&keywordType=${keywordType}">></a>
+		<div class="flex justify-center ">
+			<div class="btn-group join">
+				<a class="join-item btn"
+					href="../article/list?boardId=${param.boardId }&page=${page - 1}&keyword=${param.keyword}&keywordType=${param.keywordType}"><</a>
+				<c:forEach begin="${(viewPage - 1) * 10 +1}" end="${endPage}" varStatus="status">
+					<a class="join-item btn ${page == status.index ? 'btn-active' : '' }"
+						href="../article/list?boardId=${param.boardId }&page=${status.index }&keyword=${param.keyword}&keywordType=${param.keywordType}">${status.index}</a>
+				</c:forEach>
+				<a class="join-item btn"
+					href="../article/list?boardId=${param.boardId }&page=${page + 1}&keyword=${param.keyword}&keywordType=${param.keywordType}">></a>
+			</div>
+
+		</div>
+		<div class="ml-auto">
+			<form action="list">
+				<input type="hidden" value="0" name="page" />
+				<select class="select select-primary" name="boardId">
+					<option value="0" selected>전체</option>
+					<option value="1">공지사항</option>
+					<option value="2">자유</option>
+					<option value="3">QnA</option>
+				</select>
+
+				<select class="select select-primary" name="keywordType">
+					<option value="title" selected>제목</option>
+					<option value="body">내용</option>
+					<option value="writer">작성자</option>
+				</select>
+
+				<input type="text" name="keyword" autocomplete="off" />
+				<button>검색하기</button>
+			</form>
 		</div>
 
-		<form action="list">
-			<input type="hidden" value="0" name="page" />
-			<select class="select select-primary" name="boardId">
-				<option value="0" selected>전체</option>
-				<option value="1">공지사항</option>
-				<option value="2">자유</option>
-				<option value="3">QnA</option>
-			</select>
-
-			<select class="select select-primary" name="keywordType">
-				<option value="title" selected>제목</option>
-				<option value="body">내용</option>
-				<option value="writer">작성자</option>
-			</select>
-
-			<input type="text" name="keyword" autocomplete="off" />
-			<button>검색하기</button>
-		</form>
 	</div>
 </section>
 
