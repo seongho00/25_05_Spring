@@ -98,6 +98,7 @@
 	<select id="getTotalArticleCount" resultType="int">
 		SELECT COUNT(*)
 		FROM article
+		<if test="boardId != 0">WHERE boardId = ${boardId}</if>
 	</select>
 
 </mapper>

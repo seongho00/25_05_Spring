@@ -67,19 +67,20 @@ public class UsrArticleController {
 		if (page <= 0) {
 			page = 1;
 		}
-//		if (keytype == 0) {
-//
-//		}
+
 		int viewArticleCount = 10;
 		int viewPageCount = 10;
 
 		int limitFrom = (page - 1) * viewArticleCount;
 
-		int totalCnt = articleService.getTotalArticleCount();
+		int totalCnt = articleService.getTotalArticleCount(boardId);
 
 		int totalPage = (int) Math.ceil(totalCnt / (double) viewArticleCount);
 
 		int viewPage = (int) Math.ceil(page / (double) viewPageCount);
+		System.out.println(viewPage);
+		System.out.println(totalPage);
+		int endPage = viewPage * 10 < totalPage ? viewPage * 10 : totalPage;
 
 		if (page > totalPage - 1) {
 			page = totalPage - 1;
@@ -94,6 +95,7 @@ public class UsrArticleController {
 		model.addAttribute("board", board);
 		model.addAttribute("page", page);
 		model.addAttribute("viewPage", viewPage);
+		model.addAttribute("endPage", endPage);
 		model.addAttribute("boardId", boardId);
 		model.addAttribute("keyword", keyword);
 

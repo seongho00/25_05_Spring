@@ -42,8 +42,8 @@
 
 		<div style="text-align: center;">
 			<a href="../article/list?boardId=${boardId }&page=${page - 1}&keyword=${keyword}"><</a>
-			<c:forEach begin="${(viewPage - 1) * 10 +1}" end="${(viewPage) * 10}" varStatus="status">
-				<a style="padding: 5px;" href="../article/list?boardId=${boardId }&page=${status.count }&keyword=${keyword}">${status.index}</a>
+			<c:forEach begin="${(viewPage - 1) * 10 +1}" end="${endPage}" varStatus="status">
+				<a style="padding: 5px;" href="../article/list?boardId=${boardId }&page=${status.index }&keyword=${keyword}">${status.index}</a>
 			</c:forEach>
 			<a href="../article/list?boardId=${boardId }&page=${page + 1}&keyword=${keyword}"">></a>
 		</div>

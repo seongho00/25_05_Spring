@@ -89,9 +89,9 @@ public class ArticleService {
 		return articleRepository.getArticlesByBoardId(boardId, limitFrom, viewArticleCount, keyword, keywordType);
 	}
 
-	public int getTotalArticleCount() {
+	public int getTotalArticleCount(int boardId) {
 
-		return articleRepository.getTotalArticleCount();
+		return articleRepository.getTotalArticleCount(boardId);
 	}
 
 }
