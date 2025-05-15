@@ -1,18 +1,20 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
-import java.net.http.HttpRequest;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
+import com.example.demo.service.LikeService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
@@ -32,6 +34,8 @@ public class UsrArticleController {
 	ArticleService articleService;
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private LikeService likeService;
 
 	// 액션 메서드 (컨트롤러 메서드)
 	@RequestMapping("/usr/article/writePage")
@@ -111,11 +115,36 @@ public class UsrArticleController {
 			article.setUserCanModify(true);
 		}
 
+		int likeCount = likeService.getLikeCountByArticleId(id);
+
 		articleService.setArticleViews(article.getViews() + 1, id);
 
 		model.addAttribute("article", article);
-
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
+		model.addAttribute("likeCount", likeCount);
+
+		return "/usr/article/detail";
+	}
+
+	@RequestMapping("/usr/article/test")
+	public String test(Model model, HttpServletRequest req) {
+		System.out.println(req.getParameterValues("like"));
+
+		return "/usr/article/detail";
+	}
+
+	@RequestMapping("/usr/article/like")
+	public String like(Model model, @RequestBody Map<String, Integer> data) throws IOException {
+		if (data.get("check") == 1) {
+			int articleId = data.get("articleId");
+			int memberId = data.get("memberId");
+			likeService.setLike(articleId, memberId);
+		}
+
+		System.out.println(data.get("memberId"));
+		System.out.println(data.get("articleId"));
+		System.out.println(data.get("check"));
+		System.out.println("like 실행됨");
 
 		return "/usr/article/detail";
 	}
@@ -151,8 +180,6 @@ public class UsrArticleController {
 	public String showModifyPage(Model model, int id) throws IOException {
 
 		Article article = articleService.getArticleById(id);
-
-		// 권한체크
 
 		if (article == null) {
 			rq.printHistoryBack(Ut.f("%d번 게시글은 없습니다", id));

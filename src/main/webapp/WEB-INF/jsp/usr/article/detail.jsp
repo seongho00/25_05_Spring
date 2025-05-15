@@ -46,6 +46,10 @@
 					<td style="text-align: center;">${article.views }</td>
 				</tr>
 				<tr>
+					<th style="text-align: center;">Like</th>
+					<td style="text-align: center;">${likeCount }</td>
+				</tr>
+				<tr>
 					<td></td>
 				</tr>
 
@@ -61,15 +65,24 @@
 			<button type="button" onclick="history.back();">뒤로가기</button>
 		</div>
 
-		<div>
-			<form action="">
-				<label class="heart-checkbox">
-					<input type="checkbox" name="like" value="1" onclick="location.replace('/')" />
-					<span class="heart"></span>
+		<script>
+			const articleId = "${article.id}";
+			const loginMemberId = "${loginedMemberId}";
 
+			console.log(articleId);
+			console.log(loginMemberId);
+		</script>
+		
+		<div>
+			<form action="test">
+				<label class="heart-checkbox">
+					<input type="checkbox" name="like" value="1" class="likeCheckBox" />
+					<span class="heart"></span>
 				</label>
 			</form>
 		</div>
+
+
 
 	</div>
 </section>

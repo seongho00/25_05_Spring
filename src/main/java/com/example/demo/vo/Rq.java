@@ -52,6 +52,14 @@ public class Rq {
 
 	}
 
+	public void historyBack() throws IOException {
+		resp.setContentType("text/html; charset=UTF-8");
+		println("<script>");
+		println("history.back();");
+		println("</script>");
+
+	}
+
 	private void println(String str) throws IOException {
 		print(str + "\n");
 

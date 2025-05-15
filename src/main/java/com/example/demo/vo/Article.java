@@ -17,9 +17,10 @@ public class Article {
 	int boardId;
 	boolean userCanModify;
 	boolean userCanDelete;
-	int like;
+	boolean userCanLike;
 	String extra__writer;
 	String extra__boardName;
 	int views;
+	
 
 }

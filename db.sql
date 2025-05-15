@@ -8,7 +8,8 @@ CREATE TABLE article (
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	title CHAR(100) NOT NULL,
-	`body` TEXT NOT NULL
+	`body` TEXT NOT NULL,
+	views INT(10) UNSIGNED NOT NULL
 );
 
 # 회원 테이블 생성
@@ -37,6 +38,14 @@ CREATE TABLE board (
 	`name` CHAR(20) NOT NULL UNIQUE COMMENT '게시판 이름',
 	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1=삭제 후)',
 	delDate DATETIME COMMENT '삭제 날짜'
+);
+
+
+# 좋아요(like) 테이블 생성
+CREATE TABLE `like` (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	articleId INT(10) UNSIGNED NOT NULL,
+	memberId INT(10) UNSIGNED NOT NULL
 );
 
 # 게시판(board) 테스트 데이터 생성
@@ -151,17 +160,21 @@ SET boardId = 3
 WHERE id = 5;
 
 
-######################################################################
 
+
+######################################################################
 SELECT *
 FROM article
-ORDER BY id DESC;
+ORDER BY id;
 
 SELECT *
 FROM `member`;
 
 SELECT *
 FROM board;
+
+SELECT *
+FROM `like`;
 
 SELECT A.*, M.name AS extra__writer, B.name AS extra__boardName
 		FROM article AS A
