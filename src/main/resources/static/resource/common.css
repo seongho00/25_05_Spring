@@ -76,6 +76,16 @@ header>div>ul>li:hover>ul {
 	left: 10px;
 }
 
+.heart-active .heart, .heart-active .heart::before, .heart-active .heart::after
+	{
+	background: red;
+}
+
+.heart-active .heart, .heart-active .heart::before, .heart-active .heart::after
+	{
+	background: red;
+}
+
 .heart-checkbox input:checked+.heart, .heart-checkbox input:checked+.heart::before,
 	.heart-checkbox input:checked+.heart::after {
 	background: red;

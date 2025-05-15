@@ -20,4 +20,16 @@
 		memberId = #{memberId}
 	</select>
 
+	<select id="getLikeByMemberId" parameterType="int"
+		resultType="com.example.demo.vo.Like">
+		SELECT *
+		FROM `like`
+		WHERE memberId = #{memberId}
+	</select>
+
+	<select id="deleteLike" parameterType="map">
+		DELETE FROM `like`
+		WHERE
+		memberId = #{memberId}
+	</select>
 </mapper>

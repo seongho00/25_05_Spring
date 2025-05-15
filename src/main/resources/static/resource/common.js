@@ -5,14 +5,21 @@ $(".likeCheckBox").click(function() {
 		alert("로그인 후 이용해 주세요.");
 		return;
 	}
-	let check = 1;
 
+	let check;
+
+	if ($(this).parent().hasClass("heart-active")) { // 좋아요 체크 X (빈하트)
+		check = 0;
+	} else { // 좋아요 체크 O (꽉찬하트)
+		check = 1;
+	}
+
+	console.log(check);
 	let data = {
 		"articleId": articleId,
 		"memberId": loginMemberId,
 		"check": check
 	};
-	console.log(data);
 
 	fetch("like", {
 		method: "POST",

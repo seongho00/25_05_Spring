@@ -72,12 +72,12 @@
 			console.log(articleId);
 			console.log(loginMemberId);
 		</script>
-		
+		<div></div>
 		<div>
 			<form action="test">
-				<label class="heart-checkbox">
+				<label class="heart-checkbox ${article.userCanLike ? '' : 'heart-active'}">
 					<input type="checkbox" name="like" value="1" class="likeCheckBox" />
-					<span class="heart"></span>
+					<span class="heart "></span>
 				</label>
 			</form>
 		</div>

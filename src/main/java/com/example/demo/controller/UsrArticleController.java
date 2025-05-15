@@ -18,6 +18,7 @@ import com.example.demo.service.LikeService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
+import com.example.demo.vo.Like;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
@@ -117,6 +118,12 @@ public class UsrArticleController {
 
 		int likeCount = likeService.getLikeCountByArticleId(id);
 
+		Like like = likeService.getLikeByMemberId(rq.getLoginedMemberId());
+
+		if (like == null) {
+			article.setUserCanLike(true);
+		}
+
 		articleService.setArticleViews(article.getViews() + 1, id);
 
 		model.addAttribute("article", article);
@@ -126,27 +133,20 @@ public class UsrArticleController {
 		return "/usr/article/detail";
 	}
 
-	@RequestMapping("/usr/article/test")
-	public String test(Model model, HttpServletRequest req) {
-		System.out.println(req.getParameterValues("like"));
-
-		return "/usr/article/detail";
-	}
-
 	@RequestMapping("/usr/article/like")
+	@ResponseBody
 	public String like(Model model, @RequestBody Map<String, Integer> data) throws IOException {
 		if (data.get("check") == 1) {
 			int articleId = data.get("articleId");
 			int memberId = data.get("memberId");
 			likeService.setLike(articleId, memberId);
 		}
+		if (data.get("check") == 0) {
+			int memberId = data.get("memberId");
+			likeService.deleteLike(memberId);
+		}
 
-		System.out.println(data.get("memberId"));
-		System.out.println(data.get("articleId"));
-		System.out.println(data.get("check"));
-		System.out.println("like 실행됨");
-
-		return "/usr/article/detail";
+		return "<script>location.replace('/usr/article/detail'); </script>";
 	}
 
 	@RequestMapping("/usr/article/doDelete")

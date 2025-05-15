@@ -25,4 +25,14 @@ public class LikeService {
 		likeRepository.setLike(articleId, memberId);
 	}
 
+	public Like getLikeByMemberId(int memberId) {
+
+		return likeRepository.getLikeByMemberId(memberId);
+	}
+
+	public void deleteLike(int memberId) {
+		likeRepository.deleteLike(memberId);
+
+	}
+
 }
