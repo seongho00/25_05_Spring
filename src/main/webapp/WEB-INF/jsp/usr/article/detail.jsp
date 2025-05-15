@@ -42,6 +42,10 @@
 					<td style="text-align: center;">${article.extra__writer }</td>
 				</tr>
 				<tr>
+					<th style="text-align: center;">Views</th>
+					<td style="text-align: center;">${article.views }</td>
+				</tr>
+				<tr>
 					<td></td>
 				</tr>
 

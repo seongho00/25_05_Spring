@@ -16,6 +16,13 @@
 		boardId = #{boardId}
 	</insert>
 
+	<insert id="setArticleViews" parameterType="map">
+		UPDATE article
+		SET
+		views = #{views}
+		WHERE id = #{id}
+	</insert>
+
 	<delete id="deleteArticle" parameterType="int">
 		DELETE FROM article
 		WHERE id = #{id}
@@ -99,7 +106,8 @@
 		SELECT COUNT(*)
 		FROM article AS A
 		INNER JOIN `member` AS M
-		ON A.memberId= M.id
+		ON A.memberId=
+		M.id
 		INNER JOIN
 		board AS B
 		ON A.boardId = B.id

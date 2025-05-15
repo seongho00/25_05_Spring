@@ -26,4 +26,6 @@ public interface ArticleRepository {
 
 	public int getTotalArticleCount(int boardId, String keyword, String keywordType);
 
+	public void setArticleViews(int views, int id);
+
 }

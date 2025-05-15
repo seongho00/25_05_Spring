@@ -95,4 +95,9 @@ public class ArticleService {
 		return articleRepository.getTotalArticleCount(boardId, keyword, keywordType);
 	}
 
+	public void setArticleViews(int views, int id) {
+
+		articleRepository.setArticleViews(views, id);
+	}
+
 }

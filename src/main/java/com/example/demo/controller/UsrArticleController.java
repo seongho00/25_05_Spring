@@ -111,7 +111,10 @@ public class UsrArticleController {
 			article.setUserCanModify(true);
 		}
 
+		articleService.setArticleViews(article.getViews() + 1, id);
+
 		model.addAttribute("article", article);
+
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 
 		return "/usr/article/detail";

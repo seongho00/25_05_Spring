@@ -20,5 +20,6 @@ public class Article {
 	int like;
 	String extra__writer;
 	String extra__boardName;
+	int views;
 
 }
