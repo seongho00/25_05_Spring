@@ -64,14 +64,14 @@
 		<div class="ml-auto">
 			<form action="list">
 				<input type="hidden" value="0" name="page" />
-				<select class="select select-primary" name="boardId">
+				<select class="select select-primary" name="boardId"data-value="${param.boardId }">
 					<option value="0" selected>전체</option>
 					<option value="1">공지사항</option>
 					<option value="2">자유</option>
 					<option value="3">QnA</option>
 				</select>
 
-				<select class="select select-primary" name="keywordType">
+				<select class="select select-primary" name="keywordType" data-value="${param.keywordType }">
 					<option value="title" selected>제목</option>
 					<option value="body">내용</option>
 					<option value="writer">작성자</option>

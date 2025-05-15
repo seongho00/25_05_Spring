@@ -68,9 +68,9 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, @RequestParam(defaultValue = "0") int boardId, int page,
-			@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "all") String keywordType)
-			throws IOException {
+	public String showList(Model model, @RequestParam(defaultValue = "0") int boardId,
+			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "all") String keywordType) throws IOException {
 
 		if (page <= 0) {
 			page = 1;
