@@ -68,15 +68,12 @@
 		<script>
 			const articleId = "${article.id}";
 			const loginMemberId = "${loginedMemberId}";
-
-			console.log(articleId);
-			console.log(loginMemberId);
 		</script>
-		<div></div>
+
 		<div>
 			<form action="test">
-				<label class="heart-checkbox ${article.userCanLike ? '' : 'heart-active'}">
-					<input type="checkbox" name="like" value="1" class="likeCheckBox" />
+				<label class="heart-checkbox ${article.userCanLike ? '' : 'heart-active' }">
+					<input type="checkbox" name="like" value="${article.userCanLike ? '1' : '0'}" class="likeCheckBox" />
 					<span class="heart "></span>
 				</label>
 			</form>

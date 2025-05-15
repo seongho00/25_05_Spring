@@ -135,18 +135,21 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/like")
 	@ResponseBody
-	public String like(Model model, @RequestBody Map<String, Integer> data) throws IOException {
-		if (data.get("check") == 1) {
-			int articleId = data.get("articleId");
-			int memberId = data.get("memberId");
+	public String like(Model model, HttpServletRequest req) throws IOException {
+
+		if (req.getParameter("check").equals("1")) {
+			int articleId = Integer.parseInt(req.getParameter("articleId"));
+			int memberId = Integer.parseInt(req.getParameter("memberId"));
 			likeService.setLike(articleId, memberId);
+
 		}
-		if (data.get("check") == 0) {
-			int memberId = data.get("memberId");
+		if (req.getParameter("check").equals("0")) {
+			int memberId = Integer.parseInt(req.getParameter("memberId"));
 			likeService.deleteLike(memberId);
+
 		}
 
-		return "<script>location.replace('/usr/article/detail'); </script>";
+		return "";
 	}
 
 	@RequestMapping("/usr/article/doDelete")
