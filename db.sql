@@ -9,7 +9,7 @@ CREATE TABLE article (
 	updateDate DATETIME NOT NULL,
 	title CHAR(100) NOT NULL,
 	`body` TEXT NOT NULL,
-	views INT(10) UNSIGNED NOT NULL DEFAULT 0
+	hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0
 );
 
 # 회원 테이블 생성
@@ -188,6 +188,63 @@ SET `body` = '123',
 articleId = 3,
 memberId = 3;
 
+# reactionPoint 테이블 생성
+
+CREATE TABLE reactionPoint (
+	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	memberId INT(10) UNSIGNED NOT NULL,
+	relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+	relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
+	`point` INT(10) NOT NULL
+);
+
+# reactionPoint 테스트 데이터 생성
+# 1번 회원이 1번 글에 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 1,
+`point` = -1;
+
+# 1번 회원이 2번 글에 좋아요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 2,
+`point` = 1;
+
+# 2번 회원이 1번 글에 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`point` = -1;
+
+# 2번 회원이 2번 글에 싫어요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 2,
+`point` = -1;
+
+# 3번 회원이 1번 글에 좋아요
+INSERT INTO reactionPoint
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`point` = 1;
 
 ######################################################################
 SELECT *
@@ -205,6 +262,12 @@ FROM `like`;
 
 SELECT *
 FROM `comment`;
+
+SELECT COUNT(*)
+FROM reactionPoint
+WHERE relTypeCode = 'article' AND relId = 1 AND `point` = 1;
+
+
 
 
 SELECT A.*, M.name AS extra__writer, B.name AS extra__boardName

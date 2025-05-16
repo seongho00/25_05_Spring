@@ -83,13 +83,25 @@
 					<td style="text-align: center;">${article.extra__writer }</td>
 				</tr>
 				<tr>
-					<th style="text-align: center;">Views</th>
-					<td style="text-align: center;">${article.views }</td>
+					<th style="text-align: center;">hitCount</th>
+					<td style="text-align: center;">${article.hitCount }</td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">Like/Dislike</th>
 					<td style="text-align: center;">
-						<span class="article-detail__like-count">${reactionPlusPoint } / ${-reactionMinusPoint }</span>
+						<span class="article-detail__like-count">${article.extra__goodReactionPoint } </span>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;">Dislike</th>
+					<td style="text-align: center;">
+						<span class="article-detail__like-count"> ${article.extra__badReactionPoint }</span>
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;">Sum</th>
+					<td style="text-align: center;">
+						<span class="article-detail__like-count">${article.extra__sumReactionPoint } </span>
 					</td>
 				</tr>
 				<tr>
@@ -120,7 +132,7 @@
 				</label>
 			</form>
 		</div>
-		
+
 
 		<c:forEach var="comment" items="${comments }">
 			<div>

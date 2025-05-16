@@ -20,7 +20,10 @@ public class Article {
 	boolean userCanLike;
 	String extra__writer;
 	String extra__boardName;
-	int views;
+	int hitCount;
+	String extra__badReactionPoint;
+	String extra__goodReactionPoint;
+	String extra__sumReactionPoint;
 	
 
 }

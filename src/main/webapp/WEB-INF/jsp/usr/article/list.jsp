@@ -17,7 +17,10 @@
 					<th style="text-align: center;">Update Date</th>
 					<th style="text-align: center;">Title</th>
 					<th style="text-align: center;">Writer</th>
-					<th style="text-align: center;">Views</th>
+					<th style="text-align: center;">hitCount</th>
+					<th style="text-align: center;">Like</th>
+					<th style="text-align: center;">Dislike</th>
+					<th style="text-align: center;">Sum</th>
 
 				</tr>
 			</thead>
@@ -32,7 +35,10 @@
 							<a class="hover:underline" href="detail?id=${article.id }">${article.title }</a>
 						</td>
 						<td style="text-align: center;">${article.extra__writer }</td>
-						<td style="text-align: center;">${article.views }</td>
+						<td style="text-align: center;">${article.hitCount }</td>
+						<td style="text-align: center;">${article.extra__goodReactionPoint }</td>
+						<td style="text-align: center;">${article.extra__badReactionPoint }</td>
+						<td style="text-align: center;">${article.extra__sumReactionPoint }</td>
 
 					</tr>
 				</c:forEach>
@@ -64,7 +70,7 @@
 		<div class="ml-auto">
 			<form action="list">
 				<input type="hidden" value="0" name="page" />
-				<select class="select select-primary" name="boardId"data-value="${param.boardId }">
+				<select class="select select-primary" name="boardId" data-value="${param.boardId }">
 					<option value="0" selected>전체</option>
 					<option value="1">공지사항</option>
 					<option value="2">자유</option>

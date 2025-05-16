@@ -139,32 +139,15 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(Model model, int id, HttpServletRequest req) {
 
-		Article article = articleService.getForPrintArticleById(rq.getLoginedMemberId(), id);
+		Article article = articleService.getForPrintArticle(id);
 		if (rq.getLoginedMemberId() == article.getMemberId()) {
 			article.setUserCanModify(true);
 		}
 
-		int reactionPlusPoint = reactionPointService.getReactionPointCntByArticleId(id, 1);
-		int reactionMinusPoint = reactionPointService.getReactionPointCntByArticleId(id, -1);
-
-		int likeCount = likeService.getLikeCountByArticleId(id);
-
-		Like like = likeService.existLikeById(id, rq.getLoginedMemberId());
-
-		List<Comment> comments = commentService.getCommentByArticleId(id);
-
-		if (like == null) {
-			article.setUserCanLike(true);
-		}
-
-		articleService.setArticleViews(article.getViews() + 1, id);
+		articleService.setArticleHitCount(article.getHitCount() + 1, id);
 
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
-		model.addAttribute("likeCount", likeCount);
-		model.addAttribute("comments", comments);
-		model.addAttribute("reactionPlusPoint", reactionPlusPoint);
-		model.addAttribute("reactionMinusPoint", reactionMinusPoint);
 
 		return "/usr/article/detail";
 	}
