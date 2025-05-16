@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
+import com.example.demo.service.CommentService;
 import com.example.demo.service.LikeService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
@@ -37,6 +38,8 @@ public class UsrArticleController {
 	private BoardService boardService;
 	@Autowired
 	private LikeService likeService;
+	@Autowired
+	private CommentService commentService;
 
 	// 액션 메서드 (컨트롤러 메서드)
 	@RequestMapping("/usr/article/writePage")
@@ -65,6 +68,29 @@ public class UsrArticleController {
 		int id = articleService.writeArticle(body, title, memberId, boardId);
 
 		return Ut.jsReplace("S-1", Ut.f("%d번 게시글이 작성되었습니다.", id), "../article/list?boardId=0&page=1");
+	}
+
+	@RequestMapping("/usr/article/writeCommentPage")
+	public String writeCommentPage(Model model, int id) {
+
+		model.addAttribute("id", id);
+		return "/usr/article/writeComment";
+
+	}
+
+	@RequestMapping("/usr/article/doWriteComment")
+	@ResponseBody
+	public String doWriteComment(int id, String body) {
+
+		if (Ut.isEmptyOrNull(body)) {
+			return Ut.jsHistoryBack("F-1", "내용을 입력하세요");
+		}
+		int loginedMemberId = rq.getLoginedMemberId();
+
+		commentService.writeComment(id, loginedMemberId);
+		int memberId = rq.getLoginedMemberId();
+
+		return Ut.jsReplace("S-1", Ut.f("%d번 댓글이 작성되었습니다.", id), "../article/list?boardId=0&page=1");
 	}
 
 	@RequestMapping("/usr/article/list")
@@ -118,7 +144,7 @@ public class UsrArticleController {
 
 		int likeCount = likeService.getLikeCountByArticleId(id);
 
-		Like like = likeService.existLikeById(id ,rq.getLoginedMemberId());
+		Like like = likeService.existLikeById(id, rq.getLoginedMemberId());
 
 		if (like == null) {
 			article.setUserCanLike(true);
@@ -142,14 +168,12 @@ public class UsrArticleController {
 
 		if (req.getParameter("check").equals("1")) {
 			likeService.setLike(articleId, memberId);
-			
 
 		}
 		if (req.getParameter("check").equals("0")) {
 			likeService.deleteLike(articleId, memberId);
 
 		}
-
 	}
 
 	@RequestMapping("/usr/article/doDelete")

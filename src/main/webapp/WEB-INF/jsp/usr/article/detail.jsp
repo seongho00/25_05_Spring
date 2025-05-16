@@ -6,12 +6,13 @@
 <script>
 	const articleId = "${article.id}";
 	const loginMemberId = "${loginedMemberId}";
-	let articleCanLike = "${article.isUserCanLike()}";
+	const articleCanLike = "${article.isUserCanLike()}";
+	const articleCantLike = "${!article.isUserCanLike()}";
 </script>
 
 
 <script>
-	function test123() {
+	function increaseLike() {
 		if (loginMemberId == "0") {
 			alert("로그인 후 이용해 주세요.");
 			return;
@@ -43,7 +44,7 @@
 
 	};
 
-
+	
 </script>
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto">
@@ -95,7 +96,7 @@
 
 			</tbody>
 		</table>
-		<div class="btns">
+		<div class="btns flex">
 			<c:if test="${article.userCanModify}">   
 				<button type="button" onclick="location.replace('modifyPage?id=${article.id}');">수정하기</button>
 			</c:if>
@@ -103,13 +104,16 @@
 				<button type="button" onclick="location.replace('doDelete?id=${article.id}');">삭제하기</button>
 			</c:if>
 			<button type="button" onclick="history.back();">뒤로가기</button>
+			<div class="flex-grow"></div>
+			<button type="button" onclick="location.replace('writeCommentPage?id=${article.id}');">댓글쓰기</button>
+			
 		</div>
 
 
 		<div>
 			<form action="test">
-				<label class="heart-checkbox ${articleCanLike ? '' : 'heart-active' }">
-					<input class="like-box" type="checkbox" id="test" name="test" value="0" onClick="test123()" />
+				<label class="heart-checkbox ">
+					<input class="like-box" type="checkbox" id="test" name="test" value="0" onClick="increaseLike()" />
 					<span class="heart "></span>
 				</label>
 			</form>
