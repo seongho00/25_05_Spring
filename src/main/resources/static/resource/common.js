@@ -9,6 +9,10 @@ $('select[data-value]').each(function(index, el) {
 	}
 });
 
+function likeChecked() {
 
+	console.log(articleCantLike)
+	$("#test").prop("checked", true);
+};
 
 

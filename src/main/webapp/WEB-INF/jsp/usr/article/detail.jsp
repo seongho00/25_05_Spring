@@ -87,9 +87,9 @@
 					<td style="text-align: center;">${article.views }</td>
 				</tr>
 				<tr>
-					<th style="text-align: center;">Like</th>
+					<th style="text-align: center;">Like/Dislike</th>
 					<td style="text-align: center;">
-						<span class="article-detail__like-count">${likeCount }</span>
+						<span class="article-detail__like-count">${reactionPlusPoint } / ${-reactionMinusPoint }</span>
 					</td>
 				</tr>
 				<tr>
@@ -120,6 +120,7 @@
 				</label>
 			</form>
 		</div>
+		
 
 		<c:forEach var="comment" items="${comments }">
 			<div>

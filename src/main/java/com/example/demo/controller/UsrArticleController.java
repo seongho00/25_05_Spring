@@ -14,11 +14,13 @@ import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.CommentService;
 import com.example.demo.service.LikeService;
+import com.example.demo.service.ReactionPointService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
 import com.example.demo.vo.Comment;
 import com.example.demo.vo.Like;
+import com.example.demo.vo.ReactionPoint;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
 
@@ -39,6 +41,8 @@ public class UsrArticleController {
 	private LikeService likeService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private ReactionPointService reactionPointService;
 
 	// 액션 메서드 (컨트롤러 메서드)
 	@RequestMapping("/usr/article/writePage")
@@ -139,6 +143,10 @@ public class UsrArticleController {
 		if (rq.getLoginedMemberId() == article.getMemberId()) {
 			article.setUserCanModify(true);
 		}
+
+		int reactionPlusPoint = reactionPointService.getReactionPointCntByArticleId(id, 1);
+		int reactionMinusPoint = reactionPointService.getReactionPointCntByArticleId(id, -1);
+
 		int likeCount = likeService.getLikeCountByArticleId(id);
 
 		Like like = likeService.existLikeById(id, rq.getLoginedMemberId());
@@ -155,6 +163,9 @@ public class UsrArticleController {
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("likeCount", likeCount);
 		model.addAttribute("comments", comments);
+		model.addAttribute("reactionPlusPoint", reactionPlusPoint);
+		model.addAttribute("reactionMinusPoint", reactionMinusPoint);
+
 		return "/usr/article/detail";
 	}
 
