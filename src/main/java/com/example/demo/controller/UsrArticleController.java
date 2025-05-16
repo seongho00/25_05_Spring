@@ -2,12 +2,10 @@ package com.example.demo.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +17,7 @@ import com.example.demo.service.LikeService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
+import com.example.demo.vo.Comment;
 import com.example.demo.vo.Like;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
@@ -144,6 +143,8 @@ public class UsrArticleController {
 
 		Like like = likeService.existLikeById(id, rq.getLoginedMemberId());
 
+		List<Comment> comments = commentService.getCommentByArticleId(id);
+
 		if (like == null) {
 			article.setUserCanLike(true);
 		}
@@ -153,7 +154,7 @@ public class UsrArticleController {
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("likeCount", likeCount);
-
+		model.addAttribute("comments", comments);
 		return "/usr/article/detail";
 	}
 

@@ -13,8 +13,16 @@
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		`body` = #{body},
-		articleId = #{articleId},
+		articleId =
+		#{articleId},
 		memberId = #{memberId}
 	</select>
+	<select id="getCommentByArticleId" parameterType="int"
+		resultType="com.example.demo.vo.Comment">
+		SELECT *
+		FROM `comment`
+		WHERE articleId = #{articleId}
+	</select>
+
 
 </mapper>

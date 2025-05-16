@@ -121,6 +121,18 @@
 			</form>
 		</div>
 
+		<c:forEach var="comment" items="${comments }">
+			<div>
+				<tr>
+					<td style="text-align: center;">${comment.id}</td>
+					<td style="text-align: center;">${comment.regDate.substring(0,10)}</td>
+					<td style="text-align: center;">${comment.updateDate.substring(0,10)}</td>
+					<td style="text-align: center;">${comment.body }</td>
+
+
+				</tr>
+			</div>
+		</c:forEach>
 
 
 	</div>
