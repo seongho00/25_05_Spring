@@ -31,7 +31,7 @@
 		#{memberId},
 		relTypeCode = 'article',
 		relId = #{articleId},
-		point = 1
+		point = #{type}
 	</select>
 	
 	<select id="deleteReactionPoint" parameterType="map">
@@ -41,5 +41,16 @@
 		AND relTypeCode = 'article'
 		AND relId = #{articleId}
 	</select>
+	
+	<select id="updateReactionPoint" parameterType="map">
+		UPDATE	reactionPoint
+		SET point = #{type}
+		WHERE memberId =#{memberId}
+		AND relTypeCode = 'article'
+		AND relId = #{articleId}
+		
+	</select>
+	
+	
 
 </mapper>

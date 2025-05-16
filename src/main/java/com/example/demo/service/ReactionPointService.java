@@ -26,14 +26,18 @@ public class ReactionPointService {
 		return reactionPointRepository.getReactionPointCntByMemberId(id, loginedMemberId);
 	}
 
-	public void insertReactionPoint(int articleId, int memberId) {
-		reactionPointRepository.insertReactionPoint(articleId, memberId);
+	public void insertReactionPoint(int articleId, int memberId, int type) {
+		reactionPointRepository.insertReactionPoint(articleId, memberId, type);
 
 	}
 
 	public void deleteReactionPoint(int articleId, int memberId) {
 		reactionPointRepository.deleteReactionPoint(articleId, memberId);
 
+	}
+
+	public void updateReactionPoint(int articleId, int memberId, int type) {
+		reactionPointRepository.updateReactionPoint(articleId, memberId, type);
 	}
 
 }

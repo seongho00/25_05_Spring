@@ -10,29 +10,66 @@
 
 
 <script>
-	function toggleLike() {
+	function goodLike() {
 		if (loginMemberId == "0") {
 			alert("로그인 후 이용해 주세요.");
 			return;
 		}
 
-		let check;
-		if ($('input[id= ' + "like-box" + ']').is(':checked')) {
-			check = 1;
+		let good_check;
+		let bad_check;
+		let total_check;
+		if ($('input[id= ' + "good-box" + ']').is(':checked')) {
+			good_check = 1;
+			$('input[id=' + "bad-box" + ']').prop('checked', false);
+			bad_check = 0;
 		} else {
-			check = 0;
+			good_check = 0;
+			bad_check = 0;
 		}
-
-		let data = {
-			"articleId" : articleId,
-			"memberId" : loginMemberId,
-			"check" : check
-		};
 
 		$.get('like', {
 			articleId : articleId,
 			memberId : loginMemberId,
-			check : check,
+			good_check : good_check,
+			bad_check : bad_check,
+			ajaxMode : 'Y'
+		}, function(data) {
+
+			$('.article-detail__like-good-count').html(
+					data.extra__goodReactionPoint);
+			$('.article-detail__like-bad-count').html(
+					data.extra__badReactionPoint);
+			$('.article-detail__like-sum-count').html(
+					data.extra__sumReactionPoint);
+		}, 'json');
+
+	};
+	function badLike() {
+		if (loginMemberId == "0") {
+			alert("로그인 후 이용해 주세요.");
+			return;
+		}
+
+		let good_check;
+		let bad_check;
+		let total_check;
+
+		if ($('input[id= ' + "bad-box" + ']').is(':checked')) {
+			bad_check = 1;
+			$('input[id=' + "good-box" + ']').prop('checked', false);
+			good_check = 0;
+
+		} else {
+			good_check = 0;
+			bad_check = 0;
+		}
+
+		$.get('like', {
+			articleId : articleId,
+			memberId : loginMemberId,
+			good_check : good_check,
+			bad_check : bad_check,
 			ajaxMode : 'Y'
 		}, function(data) {
 
@@ -125,12 +162,14 @@
 
 
 		<div>
-			<form action="">
-				<label class="heart-checkbox ">
-					<input class="like-box" type="checkbox" id="like-box" name="like-box" onClick="toggleLike()" />
-					<span class="heart "></span>
-				</label>
-			</form>
+
+			<label class="heart-checkbox ">
+				<input class="good-box" type="checkbox" id="good-box" name="good-box" onClick="goodLike()" />
+				<span class="heart"></span>
+			</label>
+
+			<input class="bad-box" type="checkbox" id="bad-box" name="bad-box" onClick="badLike()" />
+			<label>싫어요</label>
 		</div>
 
 

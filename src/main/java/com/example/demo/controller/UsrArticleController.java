@@ -163,14 +163,31 @@ public class UsrArticleController {
 		int articleId = Integer.parseInt(req.getParameter("articleId"));
 		int memberId = Integer.parseInt(req.getParameter("memberId"));
 
-		if (req.getParameter("check").equals("1")) {
+		int existReactionPoint = reactionPointService.getReactionPointCntByMemberId(articleId, memberId);
 
-			reactionPointService.insertReactionPoint(articleId, memberId);
-		}
-		if (req.getParameter("check").equals("0")) {
+		if (existReactionPoint == 0) {
+			if (req.getParameter("good_check").equals("1")) {
 
+				reactionPointService.insertReactionPoint(articleId, memberId, 1);
+			}
+			if (req.getParameter("bad_check").equals("1")) {
+
+				reactionPointService.insertReactionPoint(articleId, memberId, -1);
+			}
+		} else if (req.getParameter("good_check").equals("0") && req.getParameter("bad_check").equals("0")) {
 			reactionPointService.deleteReactionPoint(articleId, memberId);
+		} else {
+
+			if (req.getParameter("good_check").equals("1")) {
+
+				reactionPointService.updateReactionPoint(articleId, memberId, 1);
+			}
+			if (req.getParameter("bad_check").equals("1")) {
+
+				reactionPointService.updateReactionPoint(articleId, memberId, -1);
+			}
 		}
+
 		Article article = articleService.getForPrintArticle(articleId);
 		return article;
 	}
