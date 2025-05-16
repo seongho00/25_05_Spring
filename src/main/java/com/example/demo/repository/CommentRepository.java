@@ -5,6 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CommentRepository {
 
-	void writeComment(int id, int memberId);
+	void writeComment(int articleId, int memberId, String body);
 
 }

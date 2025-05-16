@@ -14,5 +14,6 @@ public class Comment {
 	String body;
 	int articleId;
 	int memberId;
+	
 
 }

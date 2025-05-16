@@ -87,10 +87,9 @@ public class UsrArticleController {
 		}
 		int loginedMemberId = rq.getLoginedMemberId();
 
-		commentService.writeComment(id, loginedMemberId);
-		int memberId = rq.getLoginedMemberId();
+		commentService.writeComment(id, loginedMemberId, body);
 
-		return Ut.jsReplace("S-1", Ut.f("%d번 댓글이 작성되었습니다.", id), "../article/list?boardId=0&page=1");
+		return Ut.jsReplace("S-1", Ut.f("%d번 댓글이 작성되었습니다.", id), "../article/detail?id=" + id);
 	}
 
 	@RequestMapping("/usr/article/list")

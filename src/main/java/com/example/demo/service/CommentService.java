@@ -14,8 +14,8 @@ public class CommentService {
 		this.commentRepository = commentRepository;
 	}
 
-	public void writeComment(int id, int memberId) {
-		commentRepository.writeComment(id, memberId);
+	public void writeComment(int articleId, int memberId, String body) {
+		commentRepository.writeComment(articleId, memberId, body);
 	}
 
 }
