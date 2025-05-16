@@ -36,15 +36,15 @@
 			method : 'post',
 			dataType : 'text',
 			data : data,
-			success : function() {
+			success : function(data) {
+
 				$('input[id= ' + "test" + ']').is(':checked');
+				$('.article-detail__like-count').html(data);
 
 			}
 		});
 
 	};
-
-	
 </script>
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto">
@@ -88,7 +88,9 @@
 				</tr>
 				<tr>
 					<th style="text-align: center;">Like</th>
-					<td style="text-align: center;">${likeCount }</td>
+					<td style="text-align: center;">
+						<span class="article-detail__like-count">${likeCount }</span>
+					</td>
 				</tr>
 				<tr>
 					<td></td>
@@ -106,7 +108,7 @@
 			<button type="button" onclick="history.back();">뒤로가기</button>
 			<div class="flex-grow"></div>
 			<button type="button" onclick="location.replace('writeCommentPage?id=${article.id}');">댓글쓰기</button>
-			
+
 		</div>
 
 

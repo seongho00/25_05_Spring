@@ -141,7 +141,6 @@ public class UsrArticleController {
 		if (rq.getLoginedMemberId() == article.getMemberId()) {
 			article.setUserCanModify(true);
 		}
-
 		int likeCount = likeService.getLikeCountByArticleId(id);
 
 		Like like = likeService.existLikeById(id, rq.getLoginedMemberId());
@@ -161,7 +160,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/like")
 	@ResponseBody
-	public void like(Model model, HttpServletRequest req) throws IOException {
+	public int like(Model model, HttpServletRequest req) throws IOException {
 
 		int articleId = Integer.parseInt(req.getParameter("articleId"));
 		int memberId = Integer.parseInt(req.getParameter("memberId"));
@@ -174,6 +173,9 @@ public class UsrArticleController {
 			likeService.deleteLike(articleId, memberId);
 
 		}
+		int likeCount = likeService.getLikeCountByArticleId(articleId);
+
+		return likeCount;
 	}
 
 	@RequestMapping("/usr/article/doDelete")
