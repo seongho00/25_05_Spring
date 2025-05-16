@@ -11,4 +11,10 @@ public interface ReactionPointRepository {
 
 	int getReactionPointCntByArticleId(int articleId, int type);
 
+	int getReactionPointCntByMemberId(int id, int memberId);
+
+	void insertReactionPoint(int articleId, int memberId);
+
+	void deleteReactionPoint(int articleId, int memberId);
+
 }

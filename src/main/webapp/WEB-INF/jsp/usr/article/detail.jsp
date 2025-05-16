@@ -6,20 +6,18 @@
 <script>
 	const articleId = "${article.id}";
 	const loginMemberId = "${loginedMemberId}";
-	const articleCanLike = "${article.isUserCanLike()}";
-	const articleCantLike = "${!article.isUserCanLike()}";
 </script>
 
 
 <script>
-	function increaseLike() {
+	function toggleLike() {
 		if (loginMemberId == "0") {
 			alert("로그인 후 이용해 주세요.");
 			return;
 		}
 
 		let check;
-		if ($('input[id= ' + "test" + ']').is(':checked')) {
+		if ($('input[id= ' + "like-box" + ']').is(':checked')) {
 			check = 1;
 		} else {
 			check = 0;
@@ -31,18 +29,20 @@
 			"check" : check
 		};
 
-		$.ajax({
-			url : 'like',
-			method : 'post',
-			dataType : 'text',
-			data : data,
-			success : function(data) {
+		$.get('like', {
+			articleId : articleId,
+			memberId : loginMemberId,
+			check : check,
+			ajaxMode : 'Y'
+		}, function(data) {
 
-				$('input[id= ' + "test" + ']').is(':checked');
-				$('.article-detail__like-count').html(data);
-
-			}
-		});
+			$('.article-detail__like-good-count').html(
+					data.extra__goodReactionPoint);
+			$('.article-detail__like-bad-count').html(
+					data.extra__badReactionPoint);
+			$('.article-detail__like-sum-count').html(
+					data.extra__sumReactionPoint);
+		}, 'json');
 
 	};
 </script>
@@ -89,19 +89,19 @@
 				<tr>
 					<th style="text-align: center;">Like/Dislike</th>
 					<td style="text-align: center;">
-						<span class="article-detail__like-count">${article.extra__goodReactionPoint } </span>
+						<span class="article-detail__like-good-count">${article.extra__goodReactionPoint } </span>
 					</td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">Dislike</th>
 					<td style="text-align: center;">
-						<span class="article-detail__like-count"> ${article.extra__badReactionPoint }</span>
+						<span class="article-detail__like-bad-count"> ${article.extra__badReactionPoint }</span>
 					</td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">Sum</th>
 					<td style="text-align: center;">
-						<span class="article-detail__like-count">${article.extra__sumReactionPoint } </span>
+						<span class="article-detail__like-sum-count">${article.extra__sumReactionPoint } </span>
 					</td>
 				</tr>
 				<tr>
@@ -125,9 +125,9 @@
 
 
 		<div>
-			<form action="test">
+			<form action="">
 				<label class="heart-checkbox ">
-					<input class="like-box" type="checkbox" id="test" name="test" value="0" onClick="increaseLike()" />
+					<input class="like-box" type="checkbox" id="like-box" name="like-box" onClick="toggleLike()" />
 					<span class="heart "></span>
 				</label>
 			</form>

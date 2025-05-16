@@ -6,19 +6,40 @@
 <mapper
 	namespace="com.example.demo.repository.ReactionPointRepository">
 
-
-
-
-
 	<select id="getReactionPointCntByArticleId" parameterType="int"
 		resultType="int">
 		SELECT COUNT(*)
 		FROM reactionPoint
 		WHERE relTypeCode =
 		'article' AND relId =${articleId} AND `point` = ${type}
-
-
 	</select>
 
+	<select id="getReactionPointCntByMemberId" parameterType="int"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM reactionPoint
+		WHERE relTypeCode =
+		'article' AND relId =#{id} AND memberId = #{memberId}
+	</select>
+
+	<select id="insertReactionPoint" parameterType="map">
+		INSERT INTO
+		reactionPoint
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId =
+		#{memberId},
+		relTypeCode = 'article',
+		relId = #{articleId},
+		point = 1
+	</select>
+	
+	<select id="deleteReactionPoint" parameterType="map">
+		DELETE FROM
+		reactionPoint
+		WHERE memberId =#{memberId}
+		AND relTypeCode = 'article'
+		AND relId = #{articleId}
+	</select>
 
 </mapper>

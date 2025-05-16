@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.repository.ReactionPointRepository;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.CommentService;
@@ -144,32 +145,34 @@ public class UsrArticleController {
 			article.setUserCanModify(true);
 		}
 
+		int existLike = reactionPointService.getReactionPointCntByMemberId(id, rq.getLoginedMemberId());
+
 		articleService.setArticleHitCount(article.getHitCount() + 1, id);
 
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
+		model.addAttribute("existLike", existLike);
 
 		return "/usr/article/detail";
 	}
 
 	@RequestMapping("/usr/article/like")
 	@ResponseBody
-	public int like(Model model, HttpServletRequest req) throws IOException {
+	public Article like(Model model, HttpServletRequest req) throws IOException {
 
 		int articleId = Integer.parseInt(req.getParameter("articleId"));
 		int memberId = Integer.parseInt(req.getParameter("memberId"));
 
 		if (req.getParameter("check").equals("1")) {
-			likeService.setLike(articleId, memberId);
 
+			reactionPointService.insertReactionPoint(articleId, memberId);
 		}
 		if (req.getParameter("check").equals("0")) {
-			likeService.deleteLike(articleId, memberId);
 
+			reactionPointService.deleteReactionPoint(articleId, memberId);
 		}
-		int likeCount = likeService.getLikeCountByArticleId(articleId);
-
-		return likeCount;
+		Article article = articleService.getForPrintArticle(articleId);
+		return article;
 	}
 
 	@RequestMapping("/usr/article/doDelete")

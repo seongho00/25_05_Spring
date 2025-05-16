@@ -19,7 +19,21 @@ public class ReactionPointService {
 	public int getReactionPointCntByArticleId(int id, int type) {
 
 		return reactionPointRepository.getReactionPointCntByArticleId(id, type);
-		
+
+	}
+
+	public int getReactionPointCntByMemberId(int id, int loginedMemberId) {
+		return reactionPointRepository.getReactionPointCntByMemberId(id, loginedMemberId);
+	}
+
+	public void insertReactionPoint(int articleId, int memberId) {
+		reactionPointRepository.insertReactionPoint(articleId, memberId);
+
+	}
+
+	public void deleteReactionPoint(int articleId, int memberId) {
+		reactionPointRepository.deleteReactionPoint(articleId, memberId);
+
 	}
 
 }
