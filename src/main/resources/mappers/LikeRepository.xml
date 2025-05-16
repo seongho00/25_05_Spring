@@ -20,16 +20,16 @@
 		memberId = #{memberId}
 	</select>
 
-	<select id="getLikeByMemberId" parameterType="int"
+	<select id="existLikeById" parameterType="map"
 		resultType="com.example.demo.vo.Like">
 		SELECT *
 		FROM `like`
-		WHERE memberId = #{memberId}
+		WHERE articleId = #{articleId} AND memberId = #{memberId}
 	</select>
 
 	<select id="deleteLike" parameterType="map">
 		DELETE FROM `like`
 		WHERE
-		memberId = #{memberId}
+		articleId = #{articleId} AND memberId = #{memberId}
 	</select>
 </mapper>

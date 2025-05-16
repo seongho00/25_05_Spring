@@ -13,5 +13,7 @@ public interface LikeRepository {
 
 	public Like getLikeByMemberId(int memberId);
 
-	public void deleteLike(int memberId);
+	public void deleteLike(int articleId, int memberId);
+
+	public Like existLikeById(int articleId, int memberId);
 }

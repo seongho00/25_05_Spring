@@ -3,8 +3,48 @@
 
 <c:set var="pageTitle" value="ARTICLE DETAIL"></c:set>
 <%@ include file="../common/head.jspf"%>
+<script>
+	const articleId = "${article.id}";
+	const loginMemberId = "${loginedMemberId}";
+	let articleCanLike = "${article.isUserCanLike()}";
+</script>
 
 
+<script>
+	function test123() {
+		if (loginMemberId == "0") {
+			alert("로그인 후 이용해 주세요.");
+			return;
+		}
+
+		let check;
+		if ($('input[id= ' + "test" + ']').is(':checked')) {
+			check = 1;
+		} else {
+			check = 0;
+		}
+
+		let data = {
+			"articleId" : articleId,
+			"memberId" : loginMemberId,
+			"check" : check
+		};
+
+		$.ajax({
+			url : 'like',
+			method : 'post',
+			dataType : 'text',
+			data : data,
+			success : function() {
+				$('input[id= ' + "test" + ']').is(':checked');
+
+			}
+		});
+
+	};
+
+
+</script>
 <section class="mt-8 text-xl px-4">
 	<div class="mx-auto">
 		<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
@@ -65,15 +105,11 @@
 			<button type="button" onclick="history.back();">뒤로가기</button>
 		</div>
 
-		<script>
-			const articleId = "${article.id}";
-			const loginMemberId = "${loginedMemberId}";
-		</script>
 
 		<div>
 			<form action="test">
-				<label class="heart-checkbox ${article.userCanLike ? '' : 'heart-active' }">
-					<input type="checkbox" name="like" value="${article.userCanLike ? '1' : '0'}" class="likeCheckBox" />
+				<label class="heart-checkbox ${articleCanLike ? '' : 'heart-active' }">
+					<input class="like-box" type="checkbox" id="test" name="test" value="0" onClick="test123()" />
 					<span class="heart "></span>
 				</label>
 			</form>

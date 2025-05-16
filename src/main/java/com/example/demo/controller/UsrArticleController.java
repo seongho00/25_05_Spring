@@ -118,7 +118,7 @@ public class UsrArticleController {
 
 		int likeCount = likeService.getLikeCountByArticleId(id);
 
-		Like like = likeService.getLikeByMemberId(rq.getLoginedMemberId());
+		Like like = likeService.existLikeById(id ,rq.getLoginedMemberId());
 
 		if (like == null) {
 			article.setUserCanLike(true);
@@ -135,21 +135,21 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/like")
 	@ResponseBody
-	public String like(Model model, HttpServletRequest req) throws IOException {
+	public void like(Model model, HttpServletRequest req) throws IOException {
+
+		int articleId = Integer.parseInt(req.getParameter("articleId"));
+		int memberId = Integer.parseInt(req.getParameter("memberId"));
 
 		if (req.getParameter("check").equals("1")) {
-			int articleId = Integer.parseInt(req.getParameter("articleId"));
-			int memberId = Integer.parseInt(req.getParameter("memberId"));
 			likeService.setLike(articleId, memberId);
+			
 
 		}
 		if (req.getParameter("check").equals("0")) {
-			int memberId = Integer.parseInt(req.getParameter("memberId"));
-			likeService.deleteLike(memberId);
+			likeService.deleteLike(articleId, memberId);
 
 		}
 
-		return "";
 	}
 
 	@RequestMapping("/usr/article/doDelete")
