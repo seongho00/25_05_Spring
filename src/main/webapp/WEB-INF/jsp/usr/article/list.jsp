@@ -20,7 +20,7 @@
 					<th style="text-align: center;">hitCount</th>
 					<th style="text-align: center;">Like</th>
 					<th style="text-align: center;">Dislike</th>
-					<th style="text-align: center;">Sum</th>
+
 
 				</tr>
 			</thead>
@@ -36,9 +36,9 @@
 						</td>
 						<td style="text-align: center;">${article.extra__writer }</td>
 						<td style="text-align: center;">${article.hitCount }</td>
-						<td style="text-align: center;">${article.extra__goodReactionPoint }</td>
-						<td style="text-align: center;">${article.extra__badReactionPoint }</td>
-						<td style="text-align: center;">${article.extra__sumReactionPoint }</td>
+						<td style="text-align: center;">${article.goodReactionPoint }</td>
+						<td style="text-align: center;">${article.badReactionPoint }</td>
+
 
 					</tr>
 				</c:forEach>

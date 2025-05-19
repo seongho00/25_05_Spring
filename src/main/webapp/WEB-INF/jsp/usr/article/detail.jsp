@@ -36,12 +36,9 @@
 			ajaxMode : 'Y'
 		}, function(data) {
 
-			$('.article-detail__like-good-count').html(
-					data.extra__goodReactionPoint);
-			$('.article-detail__like-bad-count').html(
-					data.extra__badReactionPoint);
-			$('.article-detail__like-sum-count').html(
-					data.extra__sumReactionPoint);
+			$('.article-detail__like-good-count').html(data.goodReactionPoint);
+			$('.article-detail__like-bad-count').html(data.badReactionPoint);
+
 		}, 'json');
 
 	};
@@ -73,12 +70,9 @@
 			ajaxMode : 'Y'
 		}, function(data) {
 
-			$('.article-detail__like-good-count').html(
-					data.extra__goodReactionPoint);
-			$('.article-detail__like-bad-count').html(
-					data.extra__badReactionPoint);
-			$('.article-detail__like-sum-count').html(
-					data.extra__sumReactionPoint);
+			$('.article-detail__like-good-count').html(data.goodReactionPoint);
+			$('.article-detail__like-bad-count').html(data.badReactionPoint);
+
 		}, 'json');
 
 	};
@@ -126,24 +120,16 @@
 				<tr>
 					<th style="text-align: center;">Like/Dislike</th>
 					<td style="text-align: center;">
-						<span class="article-detail__like-good-count">${article.extra__goodReactionPoint } </span>
+						<span class="article-detail__like-good-count">${article.goodReactionPoint } </span>
 					</td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">Dislike</th>
 					<td style="text-align: center;">
-						<span class="article-detail__like-bad-count"> ${article.extra__badReactionPoint }</span>
+						<span class="article-detail__like-bad-count"> ${article.badReactionPoint }</span>
 					</td>
 				</tr>
-				<tr>
-					<th style="text-align: center;">Sum</th>
-					<td style="text-align: center;">
-						<span class="article-detail__like-sum-count">${article.extra__sumReactionPoint } </span>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-				</tr>
+
 
 			</tbody>
 		</table>
@@ -169,7 +155,9 @@
 			</label>
 
 			<input class="bad-box" type="checkbox" id="bad-box" name="bad-box" onClick="badLike()" />
-			<label>싫어요</label>
+			<label>
+				👎
+				<label>
 		</div>
 
 
@@ -180,8 +168,6 @@
 					<td style="text-align: center;">${comment.regDate.substring(0,10)}</td>
 					<td style="text-align: center;">${comment.updateDate.substring(0,10)}</td>
 					<td style="text-align: center;">${comment.body }</td>
-
-
 				</tr>
 			</div>
 		</c:forEach>

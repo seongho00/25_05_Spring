@@ -98,4 +98,15 @@ public class Rq {
 		return "usr/common/js";
 	}
 
+	public String getCurrentUri() {
+		String currentUri = req.getRequestURI();
+		String queryString = req.getQueryString();
+			
+		if (currentUri != null && queryString != null) {
+			
+		}
+		return currentUri + "?" + queryString;
+
+	}
+
 }

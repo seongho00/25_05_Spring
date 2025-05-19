@@ -14,13 +14,13 @@ import com.example.demo.repository.ReactionPointRepository;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.CommentService;
-import com.example.demo.service.LikeService;
+
 import com.example.demo.service.ReactionPointService;
 import com.example.demo.util.Ut;
 import com.example.demo.vo.Article;
 import com.example.demo.vo.Board;
 import com.example.demo.vo.Comment;
-import com.example.demo.vo.Like;
+
 import com.example.demo.vo.ReactionPoint;
 import com.example.demo.vo.ResultData;
 import com.example.demo.vo.Rq;
@@ -38,8 +38,6 @@ public class UsrArticleController {
 	ArticleService articleService;
 	@Autowired
 	private BoardService boardService;
-	@Autowired
-	private LikeService likeService;
 	@Autowired
 	private CommentService commentService;
 	@Autowired

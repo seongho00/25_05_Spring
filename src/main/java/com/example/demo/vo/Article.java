@@ -17,12 +17,11 @@ public class Article {
 	int boardId;
 	boolean userCanModify;
 	boolean userCanDelete;
+	int badReactionPoint;
+	int goodReactionPoint;
 
 	String extra__writer;
 	String extra__boardName;
 	int hitCount;
-	String extra__badReactionPoint;
-	String extra__goodReactionPoint;
-	String extra__sumReactionPoint;
 
 }
