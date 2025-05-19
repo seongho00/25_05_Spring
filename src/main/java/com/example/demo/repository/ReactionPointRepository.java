@@ -19,4 +19,6 @@ public interface ReactionPointRepository {
 
 	void updateReactionPoint(int articleId, int memberId, int type);
 
+	void updateArticleReactionPoint();
+
 }

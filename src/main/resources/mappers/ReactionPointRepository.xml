@@ -31,9 +31,10 @@
 		#{memberId},
 		relTypeCode = 'article',
 		relId = #{articleId},
-		point = #{type}
+		point =
+		#{type}
 	</select>
-	
+
 	<select id="deleteReactionPoint" parameterType="map">
 		DELETE FROM
 		reactionPoint
@@ -41,16 +42,33 @@
 		AND relTypeCode = 'article'
 		AND relId = #{articleId}
 	</select>
-	
+
 	<select id="updateReactionPoint" parameterType="map">
-		UPDATE	reactionPoint
+		UPDATE
+		reactionPoint
 		SET point = #{type}
 		WHERE memberId =#{memberId}
-		AND relTypeCode = 'article'
+		AND
+		relTypeCode = 'article'
 		AND relId = #{articleId}
-		
+
 	</select>
-	
-	
+
+	<select id="updateArticleReactionPoint">
+		UPDATE article AS A
+		INNER JOIN (
+		SELECT RP.relTypeCode, RP.relId,
+		SUM(IF(RP.point &gt; 0, RP.point, 0)) AS goodReactionPoint,
+		SUM(IF(RP.point &lt; 0, RP.point * -1, 0)) AS badReactionPoint
+		FROM reactionPoint AS RP
+		GROUP BY RP.relTypeCode, RP.relId
+		) AS RP_SUM
+		ON A.id = RP_SUM.relId
+		SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
+		A.badReactionPoint = RP_SUM.badReactionPoint;
+
+	</select>
+
+
 
 </mapper>

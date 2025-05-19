@@ -28,16 +28,18 @@ public class ReactionPointService {
 
 	public void insertReactionPoint(int articleId, int memberId, int type) {
 		reactionPointRepository.insertReactionPoint(articleId, memberId, type);
+		reactionPointRepository.updateArticleReactionPoint();
 
 	}
 
 	public void deleteReactionPoint(int articleId, int memberId) {
 		reactionPointRepository.deleteReactionPoint(articleId, memberId);
-
+		reactionPointRepository.updateArticleReactionPoint();
 	}
 
 	public void updateReactionPoint(int articleId, int memberId, int type) {
 		reactionPointRepository.updateReactionPoint(articleId, memberId, type);
+		reactionPointRepository.updateArticleReactionPoint();
 	}
 
 }
