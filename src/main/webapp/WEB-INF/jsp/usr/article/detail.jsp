@@ -10,6 +10,7 @@
 <script>
 	const params = {};
 	params.id = parseInt('${param.id}');
+	params.memberId = parseInt('${loginedMemberId}');
 
 	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp};
 	var isAlreadyAddBadRp = ${isAlreadyAddBadRp};
@@ -151,6 +152,17 @@
 
 <script>
 	function ArticleDetail__doIncreaseHitCount() {
+		
+		const localStorageKey = 'article__' + params.id + '__alreadyOnView';
+		const localStorageMemberIdKey = params.memberId;
+		
+		
+		if(localStorage.getItem(localStorageKey) && localStorage.getItem(localStorageMemberIdKey)){
+			return;
+		}
+		
+		localStorage.setItem(localStorageKey, true);
+		localStorage.setItem(localStorageMemberIdKey, true);
 		$.get('../article/doIncreaseHitCountRd', {
 			id : params.id,
 			ajaxMode : 'Y'

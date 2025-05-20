@@ -118,11 +118,12 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		List<String> articleReplys = articleService.getForPrintArticleReply(id);
 		ResultData usersReactionRd = reactionPointService.usersReaction(rq.getLoginedMemberId(), "article", id);
-		System.out.println(articleReplys);
+
 		if (usersReactionRd.isSuccess()) {
 			model.addAttribute("userCanMakeReaction", usersReactionRd.isSuccess());
 		}
 
+		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("article", article);
 		model.addAttribute("usersReaction", usersReactionRd.getData1());
 		model.addAttribute("isAlreadyAddGoodRp",
