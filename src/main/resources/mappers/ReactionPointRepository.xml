@@ -1,73 +1,51 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
 	namespace="com.example.demo.repository.ReactionPointRepository">
 
-	<select id="getReactionPointCntByArticleId" parameterType="int"
-		resultType="int">
-		SELECT COUNT(*)
-		FROM reactionPoint
-		WHERE relTypeCode =
-		'article' AND relId =${articleId} AND `point` = ${type}
-	</select>
-
-	<select id="getReactionPointCntByMemberId" parameterType="int"
-		resultType="int">
-		SELECT COUNT(*)
-		FROM reactionPoint
-		WHERE relTypeCode =
-		'article' AND relId =#{id} AND memberId = #{memberId}
-	</select>
-
-	<select id="insertReactionPoint" parameterType="map">
-		INSERT INTO
-		reactionPoint
-		SET regDate = NOW(),
+	<insert id="addGoodReactionPoint">
+		INSERT INTO reactionPoint
+		SET
+		regDate = NOW(),
 		updateDate = NOW(),
-		memberId =
-		#{memberId},
-		relTypeCode = 'article',
-		relId = #{articleId},
-		point =
-		#{type}
-	</select>
+		memberId = #{memberId},
+		relTypeCode =
+		#{relTypeCode},
+		relId = #{relId},
+		`point` = 1;
+	</insert>
 
-	<select id="deleteReactionPoint" parameterType="map">
-		DELETE FROM
-		reactionPoint
-		WHERE memberId =#{memberId}
-		AND relTypeCode = 'article'
-		AND relId = #{articleId}
-	</select>
+	<insert id="addBadReactionPoint">
+		INSERT INTO reactionPoint
+		SET
+		regDate = NOW(),
+		updateDate = NOW(),
+		memberId = #{memberId},
+		relTypeCode =
+		#{relTypeCode},
+		relId = #{relId},
+		`point` = -1;
+	</insert>
 
-	<select id="updateReactionPoint" parameterType="map">
-		UPDATE
-		reactionPoint
-		SET point = #{type}
-		WHERE memberId =#{memberId}
+	<select id="getSumReactionPoint">
+		SELECT IFNULL(SUM(RP.point),0)
+		FROM reactionPoint AS
+		RP
+		WHERE RP.relTypeCode = #{relTypeCode}
+		AND RP.relId = #{relId}
 		AND
-		relTypeCode = 'article'
-		AND relId = #{articleId}
-
+		RP.memberId = #{memberId};
 	</select>
 
-	<select id="updateArticleReactionPoint">
-		UPDATE article AS A
-		INNER JOIN (
-		SELECT RP.relTypeCode, RP.relId,
-		SUM(IF(RP.point &gt; 0, RP.point, 0)) AS goodReactionPoint,
-		SUM(IF(RP.point &lt; 0, RP.point * -1, 0)) AS badReactionPoint
-		FROM reactionPoint AS RP
-		GROUP BY RP.relTypeCode, RP.relId
-		) AS RP_SUM
-		ON A.id = RP_SUM.relId
-		SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
-		A.badReactionPoint = RP_SUM.badReactionPoint;
-
-	</select>
+	<delete id="deleteReactionPoint">
+		DELETE FROM reactionPoint
+		WHERE memberId = #{memberId}
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+	</delete>
 
 
 

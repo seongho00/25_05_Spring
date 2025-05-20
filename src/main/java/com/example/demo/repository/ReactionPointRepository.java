@@ -1,24 +1,16 @@
 package com.example.demo.repository;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-
-import com.example.demo.vo.ReactionPoint;
 
 @Mapper
 public interface ReactionPointRepository {
 
-	int getReactionPointCntByArticleId(int articleId, int type);
+	public int getSumReactionPoint(int memberId, String relTypeCode, int relId);
 
-	int getReactionPointCntByMemberId(int id, int memberId);
+	public int addGoodReactionPoint(int memberId, String relTypeCode, int relId);
 
-	void insertReactionPoint(int articleId, int memberId, int type);
+	public int addBadReactionPoint(int memberId, String relTypeCode, int relId);
 
-	void deleteReactionPoint(int articleId, int memberId);
-
-	void updateReactionPoint(int articleId, int memberId, int type);
-
-	void updateArticleReactionPoint();
+	public void deleteReactionPoint(int memberId, String relTypeCode, int relId);
 
 }

@@ -11,18 +11,22 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class NeedLoginInterceptor implements HandlerInterceptor {
+
 	@Autowired
 	private Rq rq;
 
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
-		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (rq.isLogined() == false) {
-			rq.printReplace("로그인 하고 사용해야함(NeedLoginInterceptor)", "/usr/member/loginPage");
+//		Rq rq = (Rq) req.getAttribute("rq");
+
+		if (!rq.isLogined()) {
+
+			rq.printHistoryBack("로그인 하고 사용해야함(NeedLoginInterceptor)");
+
 			return false;
 		}
-		return HandlerInterceptor.super.preHandle(req, resp, handler);
 
+		return HandlerInterceptor.super.preHandle(req, resp, handler);
 	}
 }

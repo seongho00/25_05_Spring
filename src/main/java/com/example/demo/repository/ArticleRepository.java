@@ -9,25 +9,40 @@ import com.example.demo.vo.Article;
 @Mapper
 public interface ArticleRepository {
 
-	public int writeArticle(String title, String body, int memberId, String boardId);
-
-	public Article getArticleById(int id);
+	public int writeArticle(int memberId, String title, String body, String boardId);
 
 	public void deleteArticle(int id);
 
 	public void modifyArticle(int id, String title, String body);
 
-	public List<Article> getArticles(int limitFrom, int viewArticleCount);
-
 	public int getLastInsertId();
 
-	public List<Article> getArticlesByBoardId(int boardId, int limitFrom, int viewArticleCount, String keyword,
-			String keywordType);
+	public Article getArticleById(int id);
 
-	public int getTotalArticleCount(int boardId, String keyword, String keywordType);
+	public List<Article> getArticles();
 
-	public void setArticleHitCount(int hitCount, int id);
+	public Article getForPrintArticle(int loginedMemberId);
 
-	public Article getForPrintArticle(int id);
+	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake, String searchKeywordTypeCode,
+			String searchKeyword);
 
+	public int getArticleCount(int boardId, String searchKeywordTypeCode, String searchKeyword);
+
+	public int increaseHitCount(int id);
+
+	public int getArticleHitCount(int id);
+
+	public int increaseGoodReactionPoint(int relId);
+
+	public int decreaseGoodReactionPoint(int relId);
+
+	public int increaseBadReactionPoint(int relId);
+
+	public int decreaseBadReactionPoint(int relId);
+
+	public int getGoodRP(int relId);
+
+	public int getBadRP(int relId);
+
+	public List<String> getForPrintArticleReply(int id);
 }

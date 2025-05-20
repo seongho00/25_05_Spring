@@ -5,8 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.demo.vo.Board;
 
 @Mapper
-public interface BoardRepository {
+public interface ReplyRepository {
 
-	public Board getBoardById(int id);
+	public void writeReply(int loginedMemberId, int articleId, String replyBody);
 
 }

@@ -5,12 +5,11 @@
 <%@ include file="../common/head.jspf"%>
 
 
-<section class="mt-8 text-xl px-4">
-
+<section class=2"mt-8 text-xl px-4">
 	<div class="mx-auto">
-		<form action="doModify" method="POST">
+		<form action="../article/doModify" method="POST">
 			<input type="hidden" name="id" value="${article.id}" />
-			<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+			<table class="table"  border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
 				<tbody>
 					<tr>
 						<th style="text-align: center;">ID</th>
@@ -25,41 +24,43 @@
 						<td style="text-align: center;">${article.updateDate}</td>
 					</tr>
 					<tr>
-						<th style="text-align: center;">Member ID</th>
-						<td style="text-align: center;">${article.memberId }</td>
+						<th style="text-align: center;">Writer</th>
+						<td style="text-align: center;">${article.extra__writer }</td>
 					</tr>
 					<tr>
 						<th style="text-align: center;">Title</th>
 						<td style="text-align: center;">
-							<input type="text" name="title" value="${article.title }" autocomplete="off" />
+							<input class="input input-primary input-sm" required="required" name="title" value="${article.title }" type="text"
+								autocomplete="off" placeholder="새 제목" />
 						</td>
-
 					</tr>
 					<tr>
 						<th style="text-align: center;">Body</th>
-
 						<td style="text-align: center;">
-							<input type="text" name="body" value="${article.body }" autocomplete="off" />
+							<input class="input input-primary input-sm" required="required" name="body" value="${article.body }" type="text"
+								autocomplete="off" placeholder="새 내용" />
 						</td>
-
-
 					</tr>
 					<tr>
-						<th style="text-align: center;">Writer</th>
-						<td style="text-align: center;">${article.extra__writer }</td>
+						<th></th>
+						<td style="text-align: center;">
+							<button class="btn btn-primary">수정</button>
+						</td>
 					</tr>
-					<th></th>
-					<td style="text-align: center;">
-						<input type="submit" value="수정" />
-					</td>
+
 				</tbody>
-
-
 			</table>
 		</form>
+		<div class="btns">
+			<button class="btn btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
+			<c:if test="${article.userCanDelete }">
+				<a class="btn btn-ghost" href="../article/doDelete?id=${article.id}">삭제</a>
+			</c:if>
+		</div>
+
 	</div>
-
-
 </section>
+
+
 
 <%@ include file="../common/foot.jspf"%>

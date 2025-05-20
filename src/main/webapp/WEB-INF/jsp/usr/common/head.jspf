@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>${pageTitle }</title>
-
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
 <!-- 제이쿼리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -19,9 +20,6 @@
 
 <!-- 데이지 UI -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/daisyui/4.12.23/full.css" />
-<script src="/resource/common.js" defer="defer"></script>
-<link rel="stylesheet" href="/resource/common.css" />
-
 </head>
 <body>
 
@@ -36,33 +34,46 @@
 				<li>
 					<div class="dropdown dropdown-hover">
 						<div tabindex="0" role="button">
-							<a href="../article/list?boardId=0&page=1">LIST</a>
+							<a href="../article/list?boardId=1">LIST</a>
 						</div>
 						<ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
 							<li>
-								<a href="../article/list?boardId=1&page=1">NOTICE</a>
+								<a href="../article/list?boardId=1">NOTICE</a>
 							</li>
 							<li>
-								<a href="../article/list?boardId=2&page=1">FREE</a>
+								<a href="../article/list?boardId=2">FREE</a>
 							</li>
 							<li>
-								<a href="../article/list?boardId=3&page=1">QnA</a>
+								<a href="../article/list?boardId=3">QnA</a>
 							</li>
 						</ul>
 					</div>
 				</li>
-
+				<!-- 				<li> -->
+				<!-- 					<a class="hover:underline" href="../article/list?boardId=1">LIST</a> -->
+				<!-- 					<ul> -->
+				<!-- 						<li> -->
+				<!-- 							<a class="hover:underline" href="../article/list?boardId=1">NOTICE</a> -->
+				<!-- 						</li> -->
+				<!-- 						<li> -->
+				<!-- 							<a class="hover:underline" href="../article/list?boardId=2">FREE</a> -->
+				<!-- 						</li> -->
+				<!-- 						<li> -->
+				<!-- 							<a class="hover:underline" href="../article/list?boardId=3">QnA</a> -->
+				<!-- 						</li> -->
+				<!-- 					</ul> -->
+				<!-- 				</li> -->
 				<c:if test="${!rq.isLogined() }">
 					<li>
-						<a class="hover:underline" href="../member/loginPage">LOGIN</a>
+						<a class="hover:underline" href="../member/login">LOGIN</a>
 					</li>
 					<li>
-						<a class="hover:underline" href="../member/joinPage">JOIN</a>
+						<a class="hover:underline" href="../member/join">JOIN</a>
 					</li>
 				</c:if>
 				<c:if test="${rq.isLogined() }">
 					<li>
-						<a class="hover:underline" href="../article/writePage">WRITE</a>
+						<a class="hover:underline" href="../article/write">WRITE</a>
 					</li>
 					<li>
 						<a onclick="if(confirm('로그아웃 하시겠습니까?') == false) return false;" class="hover:underline" href="../member/doLogout">LOGOUT</a>

@@ -2,7 +2,6 @@ package com.example.demo.vo;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -13,21 +12,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
+import lombok.Setter;
 
-// @Autowired사용을 위한 코드
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Getter
+@Setter
 public class Rq {
 
-	@Getter
-	private boolean isLogined;
-	@Getter
-	private int loginedMemberId;
+	private final HttpServletRequest req;
+	private final HttpServletResponse resp;
+	private final HttpSession session;
 
-	private HttpServletRequest req;
-	private HttpServletResponse resp;
-
-	private HttpSession session;
+	private boolean isLogined = false;
+	private int loginedMemberId = 0;
 
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
 		this.req = req;
@@ -38,6 +36,7 @@ public class Rq {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		}
+
 		this.req.setAttribute("rq", this);
 	}
 
@@ -49,20 +48,12 @@ public class Rq {
 		}
 		println("history.back();");
 		println("</script>");
-
-	}
-
-	public void historyBack() throws IOException {
-		resp.setContentType("text/html; charset=UTF-8");
-		println("<script>");
-		println("history.back();");
-		println("</script>");
-
+		resp.getWriter().flush();
+		resp.getWriter().close();
 	}
 
 	private void println(String str) throws IOException {
 		print(str + "\n");
-
 	}
 
 	private void print(String str) throws IOException {
@@ -81,17 +72,6 @@ public class Rq {
 		System.err.println("initBeforeActionInterceptor 실행됨");
 	}
 
-	public void printReplace(String msg, String path) throws IOException {
-		resp.setContentType("text/html; charset=UTF-8");
-		println("<script>");
-		if (!Ut.isEmpty(msg)) {
-			println("alert('" + msg + "');");
-		}
-		println("location.replace('" + path + "');");
-		println("</script>");
-
-	}
-
 	public String historyBackOnView(String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
@@ -101,12 +81,14 @@ public class Rq {
 	public String getCurrentUri() {
 		String currentUri = req.getRequestURI();
 		String queryString = req.getQueryString();
-			
+
+		System.out.println(currentUri);
+		System.out.println(queryString);
+
 		if (currentUri != null && queryString != null) {
-			
+			currentUri += "?" + queryString;
 		}
-		return currentUri + "?" + queryString;
 
+		return currentUri;
 	}
-
 }

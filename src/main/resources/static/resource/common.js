@@ -1,4 +1,3 @@
-
 $('select[data-value]').each(function(index, el) {
 	const $el = $(el);
 
@@ -8,11 +7,3 @@ $('select[data-value]').each(function(index, el) {
 		$el.val(defaultValue);
 	}
 });
-
-function likeChecked() {
-
-	console.log(articleCantLike)
-	$("#test").prop("checked", true);
-};
-
-

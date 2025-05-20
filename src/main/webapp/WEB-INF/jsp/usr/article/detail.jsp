@@ -3,91 +3,179 @@
 
 <c:set var="pageTitle" value="ARTICLE DETAIL"></c:set>
 <%@ include file="../common/head.jspf"%>
+
+<!-- <iframe src="http://localhost:8080/usr/article/doIncreaseHitCount?id=2" frameborder="0"></iframe> -->
+
+<!-- 변수 -->
 <script>
-	const articleId = "${article.id}";
-	const loginMemberId = "${loginedMemberId}";
+	const params = {};
+	params.id = parseInt('${param.id}');
+
+	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp};
+	var isAlreadyAddBadRp = ${isAlreadyAddBadRp};
+	var isLogined = ${checkLogin};
 </script>
 
+<!-- 좋아요 싫어요  -->
+<script>
+<!-- 좋아요 싫어요 버튼	-->
+	function checkLogin(){
+		if (isLogined == false){
+			alert("로그인이 필요합니다.");
+			return;
+		}
+	}
+
+	function checkRP() {
+		if (isAlreadyAddGoodRp == true) {
+			$('#likeButton').toggleClass('btn-outline');
+		} else if (isAlreadyAddBadRp == true) {
+			$('#DislikeButton').toggleClass('btn-outline');
+		} else {
+			return;
+		}
+	}
+
+	function doGoodReaction(relTypeCode,relId) {
+
+		$.ajax({
+			url : '/usr/reactionPoint/doGoodReaction',
+			type : 'POST',
+			data : {
+				relTypeCode : relTypeCode,
+				relId : relId
+			},
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+				console.log('data.data1Name : ' + data.data1Name);
+				console.log('data.data1 : ' + data.data1);
+				console.log('data.data2Name : ' + data.data2Name);
+				console.log('data.data2 : ' + data.data2);
+				if (data.resultCode.startsWith('S-')) {
+					var likeButton = $('#likeButton');
+					var likeCount = $('#likeCount');
+					var likeCountC = $('.likeCount');
+					var DislikeButton = $('#DislikeButton');
+					var DislikeCount = $('#DislikeCount');
+					var DislikeCountC = $('.DislikeCount');
+
+					if (data.resultCode == 'S-1') {
+						likeButton.toggleClass('btn-outline');
+						likeCount.text(data.data1);
+						likeCountC.text(data.data1);
+					} else if (data.resultCode == 'S-2') {
+						DislikeButton.toggleClass('btn-outline');
+						DislikeCount.text(data.data2);
+						DislikeCountC.text(data.data2);
+						likeButton.toggleClass('btn-outline');
+						likeCount.text(data.data1);
+						likeCountC.text(data.data1);
+					} else {
+						likeButton.toggleClass('btn-outline');
+						likeCount.text(data.data1);
+						likeCountC.text(data.data1);
+					}
+
+				} else {
+					alert(data.msg);
+				}
+
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert('좋아요 오류 발생 : ' + textStatus);
+
+			}
+
+		});
+	}
+
+	function doBadReaction(relTypeCode,relId) {
+
+		$.ajax({
+			url : '/usr/reactionPoint/doBadReaction',
+			type : 'POST',
+			data : {
+				relTypeCode : relTypeCode,
+				relId : relId
+				
+			},
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+				console.log('data.data1Name : ' + data.data1Name);
+				console.log('data.data1 : ' + data.data1);
+				console.log('data.data2Name : ' + data.data2Name);
+				console.log('data.data2 : ' + data.data2);
+				if (data.resultCode.startsWith('S-')) {
+					var likeButton = $('#likeButton');
+					var likeCount = $('#likeCount');
+					var likeCountC = $('.likeCount');
+					var DislikeButton = $('#DislikeButton');
+					var DislikeCount = $('#DislikeCount');
+					var DislikeCountC = $('.DislikeCount');
+
+					if (data.resultCode == 'S-1') {
+						DislikeButton.toggleClass('btn-outline');
+						DislikeCount.text(data.data2);
+						DislikeCountC.text(data.data2);
+					} else if (data.resultCode == 'S-2') {
+						likeButton.toggleClass('btn-outline');
+						likeCount.text(data.data1);
+						likeCountC.text(data.data1);
+						DislikeButton.toggleClass('btn-outline');
+						DislikeCount.text(data.data2);
+						DislikeCountC.text(data.data2);
+
+					} else {
+						DislikeButton.toggleClass('btn-outline');
+						DislikeCount.text(data.data2);
+						DislikeCountC.text(data.data2);
+					}
+
+				} else {
+					alert(data.msg);
+				}
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert('싫어요 오류 발생 : ' + textStatus);
+			}
+
+		});
+	}
+
+	$(function() {
+		checkRP();
+	});
+</script>
 
 <script>
-	function goodLike() {
-		if (loginMemberId == "0") {
-			alert("로그인 후 이용해 주세요.");
-			return;
-		}
-
-		let good_check;
-		let bad_check;
-		let total_check;
-		if ($('input[id= ' + "good-box" + ']').is(':checked')) {
-			good_check = 1;
-			$('input[id=' + "bad-box" + ']').prop('checked', false);
-			bad_check = 0;
-		} else {
-			good_check = 0;
-			bad_check = 0;
-		}
-
-		$.get('like', {
-			articleId : articleId,
-			memberId : loginMemberId,
-			good_check : good_check,
-			bad_check : bad_check,
+	function ArticleDetail__doIncreaseHitCount() {
+		$.get('../article/doIncreaseHitCountRd', {
+			id : params.id,
 			ajaxMode : 'Y'
 		}, function(data) {
-
-			$('.article-detail__like-good-count').html(data.goodReactionPoint);
-			$('.article-detail__like-bad-count').html(data.badReactionPoint);
-
+			console.log(data);
+			console.log(data.data1);
+			console.log(data.msg);
+			$('.article-detail__hit-count').html(data.data1);
 		}, 'json');
+	}
 
-	};
-	function badLike() {
-		if (loginMemberId == "0") {
-			alert("로그인 후 이용해 주세요.");
-			return;
-		}
+	$(function() {
+		ArticleDetail__doIncreaseHitCount();
+		// 		setTimeout(ArticleDetail__doIncreaseHitCount, 2000);
 
-		let good_check;
-		let bad_check;
-		let total_check;
-
-		if ($('input[id= ' + "bad-box" + ']').is(':checked')) {
-			bad_check = 1;
-			$('input[id=' + "good-box" + ']').prop('checked', false);
-			good_check = 0;
-
-		} else {
-			good_check = 0;
-			bad_check = 0;
-		}
-
-		$.get('like', {
-			articleId : articleId,
-			memberId : loginMemberId,
-			good_check : good_check,
-			bad_check : bad_check,
-			ajaxMode : 'Y'
-		}, function(data) {
-
-			$('.article-detail__like-good-count').html(data.goodReactionPoint);
-			$('.article-detail__like-bad-count').html(data.badReactionPoint);
-
-		}, 'json');
-
-	};
+	})
 </script>
-<section class="mt-8 text-xl px-4">
+
+<section class="mt-24 text-xl px-4">
 	<div class="mx-auto">
-		<table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
+		<table class="table" border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse;">
 			<tbody>
 				<tr>
 					<th style="text-align: center;">ID</th>
 					<td style="text-align: center;">${article.id}</td>
-				</tr>
-				<tr>
-					<th style="text-align: center;">Board</th>
-					<td style="text-align: center;">${article.extra__boardName}</td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">Registration Date</th>
@@ -98,8 +186,36 @@
 					<td style="text-align: center;">${article.updateDate}</td>
 				</tr>
 				<tr>
-					<th style="text-align: center;">Member ID</th>
-					<td style="text-align: center;">${article.memberId }</td>
+					<th style="text-align: center;">Writer</th>
+					<td style="text-align: center;">${article.extra__writer }</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;">BoardId</th>
+					<td style="text-align: center;">${article.boardId }</td>
+				</tr>
+				<tr>
+					<th style="text-align: center;">LIKE / DISLIKE / ${usersReaction }</th>
+					<td style="text-align: center;">
+						<button id="likeButton" class="btn btn-outline btn-success" onclick="doGoodReaction('article',${param.id})">
+							👍 LIKE
+							<span class="likeCount">${article.goodReactionPoint}</span>
+						</button>
+						<button id="DislikeButton" class="btn btn-outline btn-error" onclick="doBadReaction('article',${param.id})">
+							👎 DISLIKE
+							<span class="DislikeCount">${article.badReactionPoint}</span>
+						</button>
+						<%-- 						<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}" --%>
+						<%-- 							class="btn btn-outline btn-success">👍 LIKE ${article.goodReactionPoint }</a> --%>
+						<%-- 						<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}" --%>
+						<%-- 							class="btn btn-outline btn-error">👎 DISLIKE ${article.badReactionPoint}</a> --%>
+					</td>
+				</tr>
+
+				<tr>
+					<th style="text-align: center;">VIEWS</th>
+					<td style="text-align: center;">
+						<span class="article-detail__hit-count">${article.hitCount }</span>
+					</td>
 				</tr>
 				<tr>
 					<th style="text-align: center;">Title</th>
@@ -109,71 +225,42 @@
 					<th style="text-align: center;">Body</th>
 					<td style="text-align: center;">${article.body }</td>
 				</tr>
-				<tr>
-					<th style="text-align: center;">Writer</th>
-					<td style="text-align: center;">${article.extra__writer }</td>
-				</tr>
-				<tr>
-					<th style="text-align: center;">hitCount</th>
-					<td style="text-align: center;">${article.hitCount }</td>
-				</tr>
-				<tr>
-					<th style="text-align: center;">Like/Dislike</th>
-					<td style="text-align: center;">
-						<span class="article-detail__like-good-count">${article.goodReactionPoint } </span>
-					</td>
-				</tr>
-				<tr>
-					<th style="text-align: center;">Dislike</th>
-					<td style="text-align: center;">
-						<span class="article-detail__like-bad-count"> ${article.badReactionPoint }</span>
-					</td>
-				</tr>
-
-
 			</tbody>
 		</table>
-		<div class="btns flex">
-			<c:if test="${article.userCanModify}">   
-				<button type="button" onclick="location.replace('modifyPage?id=${article.id}');">수정하기</button>
+		<div class="btns">
+			<button class="btn btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
+			<c:if test="${article.userCanModify }">
+				<a class="btn btn-ghost" href="../article/modify?id=${article.id}">수정</a>
 			</c:if>
-			<c:if test="${article.userCanDelete}">  
-				<button type="button" onclick="location.replace('doDelete?id=${article.id}');">삭제하기</button>
+			<c:if test="${article.userCanDelete }">
+				<a class="btn btn-ghost" href="../article/doDelete?id=${article.id}">삭제</a>
 			</c:if>
-			<button type="button" onclick="history.back();">뒤로가기</button>
-			<div class="flex-grow"></div>
-			<button type="button" onclick="location.replace('writeCommentPage?id=${article.id}');">댓글쓰기</button>
-
 		</div>
 
-
-		<div>
-
-			<label class="heart-checkbox ">
-				<input class="good-box" type="checkbox" id="good-box" name="good-box" onClick="goodLike()" />
-				<span class="heart"></span>
-			</label>
-
-			<input class="bad-box" type="checkbox" id="bad-box" name="bad-box" onClick="badLike()" />
-			<label>
-				👎
-				<label>
-		</div>
+		<form action="../reply/doWriteReply">
+			<input type="hidden" name="articleId" value="${article.id }" />
+			<input type="text" onClick="checkLogin();" name="replyBody" autocomplete="off" />
+			<button>댓글 작성</button>
+		</form>
 
 
-		<c:forEach var="comment" items="${comments }">
+		<c:forEach var="articleReply" items="${articleReplys }">
 			<div>
-				<tr>
-					<td style="text-align: center;">${comment.id}</td>
-					<td style="text-align: center;">${comment.regDate.substring(0,10)}</td>
-					<td style="text-align: center;">${comment.updateDate.substring(0,10)}</td>
-					<td style="text-align: center;">${comment.body }</td>
-				</tr>
+				작성자 : ${article.extra__writer}, 내용 : ${articleReply.extra__replyBody }
+				<button id="likeButton" class="btn btn-outline btn-success" onclick="doGoodReaction(reply,${param.id})">
+					👍 추천
+					<span class="likeCount">${article.goodReactionPoint}</span>
+				</button>
 			</div>
+
 		</c:forEach>
 
 
 	</div>
 </section>
+
+
+
+
 
 <%@ include file="../common/foot.jspf"%>
