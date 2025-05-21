@@ -32,17 +32,20 @@ public interface ArticleRepository {
 
 	public int getArticleHitCount(int id);
 
-	public int increaseGoodReactionPoint(int relId);
+	public int increaseGoodReactionPoint(String relTypeCode, int relId);
 
-	public int decreaseGoodReactionPoint(int relId);
+	public int decreaseGoodReactionPoint(String relTypeCode, int relId);
 
-	public int increaseBadReactionPoint(int relId);
+	public int increaseBadReactionPoint(String relTypeCode, int relId);
 
-	public int decreaseBadReactionPoint(int relId);
+	public int decreaseBadReactionPoint(String relTypeCode, int relId);
 
 	public int getGoodRP(int relId);
 
 	public int getBadRP(int relId);
 
-	public List<String> getForPrintArticleReply(int id);
+	public int getReplyGoodRP(int relId);
+
+	public int getReplyBadRP(int relId);
+
 }

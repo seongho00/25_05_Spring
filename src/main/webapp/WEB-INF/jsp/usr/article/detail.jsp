@@ -60,6 +60,7 @@
 					var DislikeButton = $('#DislikeButton');
 					var DislikeCount = $('#DislikeCount');
 					var DislikeCountC = $('.DislikeCount');
+					
 
 					if (data.resultCode == 'S-1') {
 						likeButton.toggleClass('btn-outline');
@@ -250,18 +251,23 @@
 		</div>
 
 		<form action="../reply/doWriteReply">
-			<input type="hidden" name="articleId" value="${article.id }" />
-			<input type="text" onClick="checkLogin();" name="replyBody" autocomplete="off" />
+			<input type="hidden" name="relId" value="${article.id }" />
+			<input type="hidden" name="relTypeCode" value="article" />
+			<input type="text" onClick="checkLogin();" name="body" autocomplete="off" />
 			<button>댓글 작성</button>
 		</form>
 
 
-		<c:forEach var="articleReply" items="${articleReplys }">
+		<c:forEach var="reply" items="${replys }">
 			<div>
-				작성자 : ${article.extra__writer}, 내용 : ${articleReply.extra__replyBody }
-				<button id="likeButton" class="btn btn-outline btn-success" onclick="doGoodReaction(reply,${param.id})">
-					👍 추천
-					<span class="likeCount">${article.goodReactionPoint}</span>
+				작성자 : ${reply.extra__writer}, 내용 : ${reply.body }
+				<button id="likeButton" class="btn btn-outline btn-success" onclick="doGoodReaction('reply',${param.id})">
+					👍 LIKE
+					<span class="likeCount">${reply.goodReactionPoint}</span>
+				</button>
+				<button id="DislikeButton" class="btn btn-outline btn-error" onclick="doBadReaction('reply',${param.id})">
+					👎 DISLIKE
+					<span class="DislikeCount">${reply.badReactionPoint}</span>
 				</button>
 			</div>
 

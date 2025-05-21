@@ -40,17 +40,28 @@
 		WHERE id = #{id}
 	</update>
 
-	<update id="increaseGoodReactionPoint" parameterType="int">
+	<update id="increaseGoodReactionPoint" parameterType="map">
 		UPDATE
-		article
+		<choose>
+			<when test="relTypeCode.equals('article')">article</when>
+			<when test="relTypeCode.equals('reply')">reply</when>
+
+			<otherwise>article</otherwise>
+		</choose>
 		SET
 		goodReactionPoint = goodReactionPoint + 1
-		WHERE id = #{relId}
+		WHERE id =
+		#{relId}
 	</update>
 
 	<update id="decreaseGoodReactionPoint" parameterType="int">
 		UPDATE
-		article
+		<choose>
+			<when test="relTypeCode.equals('article')">article</when>
+			<when test="relTypeCode.equals('reply')">reply</when>
+
+			<otherwise>article</otherwise>
+		</choose>
 		SET goodReactionPoint = goodReactionPoint - 1
 		WHERE id =
 		#{relId}
@@ -58,14 +69,24 @@
 
 	<update id="increaseBadReactionPoint" parameterType="int">
 		UPDATE
-		article
+		<choose>
+			<when test="relTypeCode.equals('article')">article</when>
+			<when test="relTypeCode.equals('reply')">reply</when>
+
+			<otherwise>article</otherwise>
+		</choose>
 		SET badReactionPoint = badReactionPoint + 1
 		WHERE id = #{relId}
 	</update>
 
 	<update id="decreaseBadReactionPoint" parameterType="int">
 		UPDATE
-		article
+		<choose>
+			<when test="relTypeCode.equals('article')">article</when>
+			<when test="relTypeCode.equals('reply')">reply</when>
+
+			<otherwise>article</otherwise>
+		</choose>
 		SET badReactionPoint = badReactionPoint - 1
 		WHERE id = #{relId}
 	</update>
@@ -182,21 +203,25 @@
 		WHERE id =
 		#{relId}
 	</select>
+
 	<select id="getBadRP">SELECT badReactionPoint
 		FROM article
 		WHERE id =
 		#{relId}
 	</select>
 
-	<select id="getForPrintArticleReply"
-		resultType="com.example.demo.vo.Article">
-		SELECT A.*, R.replyBody AS extra__replyBody
-		FROM
-		article AS
-		A
-		INNER JOIN
-		reply AS R
-		ON A.id = R.articleId
-		WHERE A.id = #{id}
+	<select id="getReplyGoodRP">
+		SELECT goodReactionPoint
+		FROM reply
+		WHERE id =
+		#{relId}
 	</select>
+
+	<select id="getReplyBadRP">SELECT badReactionPoint
+		FROM reply
+		WHERE id =
+		#{relId}
+	</select>
+
+
 </mapper>

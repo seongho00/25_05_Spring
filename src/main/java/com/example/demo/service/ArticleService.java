@@ -114,8 +114,8 @@ public class ArticleService {
 		return articleRepository.getArticleHitCount(id);
 	}
 
-	public ResultData increaseGoodReactionPoint(int relId) {
-		int affectedRow = articleRepository.increaseGoodReactionPoint(relId);
+	public ResultData increaseGoodReactionPoint(String relTypeCode, int relId) {
+		int affectedRow = articleRepository.increaseGoodReactionPoint(relTypeCode, relId);
 
 		if (affectedRow == 0) {
 			return ResultData.from("F-1", "없는 게시물");
@@ -124,8 +124,8 @@ public class ArticleService {
 		return ResultData.from("S-1", "좋아요 증가", "affectedRow", affectedRow);
 	}
 
-	public ResultData increaseBadReactionPoint(int relId) {
-		int affectedRow = articleRepository.increaseBadReactionPoint(relId);
+	public ResultData increaseBadReactionPoint(String relTypeCode, int relId) {
+		int affectedRow = articleRepository.increaseBadReactionPoint(relTypeCode, relId);
 
 		if (affectedRow == 0) {
 			return ResultData.from("F-1", "없는 게시물");
@@ -134,8 +134,8 @@ public class ArticleService {
 		return ResultData.from("S-1", "싫어요 증가", "affectedRow", affectedRow);
 	}
 
-	public ResultData decreaseGoodReactionPoint(int relId) {
-		int affectedRow = articleRepository.decreaseGoodReactionPoint(relId);
+	public ResultData decreaseGoodReactionPoint(String relTypeCode, int relId) {
+		int affectedRow = articleRepository.decreaseGoodReactionPoint(relTypeCode, relId);
 
 		if (affectedRow == 0) {
 			return ResultData.from("F-1", "없는 게시물");
@@ -144,8 +144,8 @@ public class ArticleService {
 		return ResultData.from("S-1", "좋아요 감소", "affectedRow", affectedRow);
 	}
 
-	public ResultData decreaseBadReactionPoint(int relId) {
-		int affectedRow = articleRepository.decreaseBadReactionPoint(relId);
+	public ResultData decreaseBadReactionPoint(String relTypeCode, int relId) {
+		int affectedRow = articleRepository.decreaseBadReactionPoint(relTypeCode, relId);
 
 		if (affectedRow == 0) {
 			return ResultData.from("F-1", "없는 게시물");
@@ -154,16 +154,24 @@ public class ArticleService {
 		return ResultData.from("S-1", "싫어요 감소", "affectedRow", affectedRow);
 	}
 
-	public int getGoodRP(int relId) {
-		return articleRepository.getGoodRP(relId);
+	public int getGoodRP(String relTypeCode, int relId) {
+		if (relTypeCode.equals("article")) {
+			return articleRepository.getGoodRP(relId);
+
+		} else if (relTypeCode.equals("reply")) {
+			return articleRepository.getReplyGoodRP(relId);
+		}
+		return 0;
 	}
 
-	public int getBadRP(int relId) {
-		return articleRepository.getBadRP(relId);
-	}
+	public int getBadRP(String relTypeCode, int relId) {
+		if (relTypeCode.equals("article")) {
+			return articleRepository.getBadRP(relId);
 
-	public List<String> getForPrintArticleReply(int id) {
-		return articleRepository.getForPrintArticleReply(id);
+		} else if (relTypeCode.equals("reply")) {
+			return articleRepository.getReplyBadRP(relId);
+		}
+		return 0;
 	}
 
 }

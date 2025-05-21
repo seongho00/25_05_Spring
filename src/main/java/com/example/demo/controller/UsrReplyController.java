@@ -26,16 +26,16 @@ public class UsrReplyController {
 
 	@RequestMapping("/usr/reply/doWriteReply")
 	@ResponseBody
-	public String doWriteReply(int articleId, @RequestParam(defaultValue = "") String replyBody) {
+	public String doWriteReply(String relTypeCode, int relId, @RequestParam(defaultValue = "") String body) {
 
-		if (replyBody.trim().equals("")) {
+		if (body.trim().equals("")) {
 			return Ut.jsHistoryBack("F-1", "내용 입력 필요");
 		}
-		ResultData usersReplyReactionRd = replyService.writeReply(rq.getLoginedMemberId(), articleId, replyBody);
+		ResultData usersReplyReactionRd = replyService.writeReply(rq.getLoginedMemberId(), relTypeCode, relId, body);
 
 //		return ResultData.from(reactionRd.getResultCode(), reactionRd.getMsg(), "goodRP", goodRP, "badRP", badRP);
 		return Ut.jsReplace(usersReplyReactionRd.getResultCode(), usersReplyReactionRd.getMsg(),
-				"/usr/article/detail?id=" + articleId);
+				"/usr/article/detail?id=" + relId);
 	}
 
 }

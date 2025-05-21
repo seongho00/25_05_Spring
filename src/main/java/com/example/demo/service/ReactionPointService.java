@@ -47,7 +47,10 @@ public class ReactionPointService {
 
 		switch (relTypeCode) {
 		case "article":
-			articleService.increaseGoodReactionPoint(relId);
+			articleService.increaseGoodReactionPoint(relTypeCode, relId);
+			break;
+		case "reply":
+			articleService.increaseGoodReactionPoint(relTypeCode, relId);
 			break;
 		}
 
@@ -63,7 +66,10 @@ public class ReactionPointService {
 
 		switch (relTypeCode) {
 		case "article":
-			articleService.increaseBadReactionPoint(relId);
+			articleService.increaseBadReactionPoint(relTypeCode, relId);
+			break;
+		case "reply":
+			articleService.increaseBadReactionPoint(relTypeCode, relId);
 			break;
 		}
 
@@ -75,7 +81,10 @@ public class ReactionPointService {
 
 		switch (relTypeCode) {
 		case "article":
-			articleService.decreaseGoodReactionPoint(relId);
+			articleService.decreaseGoodReactionPoint(relTypeCode, relId);
+			break;
+		case "reply":
+			articleService.decreaseGoodReactionPoint(relTypeCode, relId);
 			break;
 		}
 		return ResultData.from("S-1", "좋아요 취소 됨");
@@ -87,7 +96,10 @@ public class ReactionPointService {
 
 		switch (relTypeCode) {
 		case "article":
-			articleService.decreaseBadReactionPoint(relId);
+			articleService.decreaseBadReactionPoint(relTypeCode, relId);
+			break;
+		case "reply":
+			articleService.decreaseGoodReactionPoint(relTypeCode, relId);
 			break;
 		}
 		return ResultData.from("S-1", "싫어요 취소 됨");
@@ -112,7 +124,5 @@ public class ReactionPointService {
 
 		return false;
 	}
-
-
 
 }
