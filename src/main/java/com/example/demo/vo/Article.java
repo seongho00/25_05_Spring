@@ -26,6 +26,7 @@ public class Article {
 
 	private String extra__sumReactionPoint;
 	private String extra__replyBody;
+	private String extra__repliesCount;
 
 	private boolean userCanModify;
 	private boolean userCanDelete;

@@ -61,7 +61,8 @@
 					var DislikeCount = $('#DislikeCount');
 					var DislikeCountC = $('.DislikeCount');
 					
-
+					
+					
 					if (data.resultCode == 'S-1') {
 						likeButton.toggleClass('btn-outline');
 						likeCount.text(data.data1);
@@ -109,6 +110,9 @@
 				console.log('data.data1 : ' + data.data1);
 				console.log('data.data2Name : ' + data.data2Name);
 				console.log('data.data2 : ' + data.data2);
+				
+			
+				
 				if (data.resultCode.startsWith('S-')) {
 					var likeButton = $('#likeButton');
 					var likeCount = $('#likeCount');
@@ -117,6 +121,8 @@
 					var DislikeCount = $('#DislikeCount');
 					var DislikeCountC = $('.DislikeCount');
 
+	
+					
 					if (data.resultCode == 'S-1') {
 						DislikeButton.toggleClass('btn-outline');
 						DislikeCount.text(data.data2);
@@ -250,12 +256,19 @@
 			</c:if>
 		</div>
 
-		<form action="../reply/doWriteReply">
-			<input type="hidden" name="relId" value="${article.id }" />
-			<input type="hidden" name="relTypeCode" value="article" />
-			<input type="text" onClick="checkLogin();" name="body" autocomplete="off" />
-			<button>댓글 작성</button>
-		</form>
+		<c:if test="${rq.isLogined() }">
+			<form action="../reply/doWriteReply">
+				<input type="hidden" name="relId" value="${article.id }" />
+				<input type="hidden" name="relTypeCode" value="article" />
+				<input type="text" onClick="checkLogin();" name="body" autocomplete="off" />
+				<button>댓글 작성</button>
+			</form>
+			<section class="mt-24 text-xl px-4">
+		</c:if>
+
+		<c:if test="${!rq.isLogined() }">
+		댓글 작성을 위해 <a class="btn btn-outline btn-primary" href="../member/login">로그인</a>이 필요합니다
+		</c:if>
 
 
 		<c:forEach var="reply" items="${replys }">
